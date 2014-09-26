@@ -13,7 +13,7 @@ public class PerlinNoise2D {
     /** from java.util.Random implementation */
     private static final long rand_mask = (1L << 48) - 1;
 	
-	public PerlinNoise2D(long seed, double initialRange, double initialSize, int numOvertoneLayers){
+	public PerlinNoise2D(long seed, float initialRange, float initialSize, int numOvertoneLayers){
 		layers = new NoiseLayer2D[numOvertoneLayers];
 		for(int i = 0; i < layers.length; i++){
 			seed = scramble(seed);
@@ -23,8 +23,8 @@ public class PerlinNoise2D {
 		}
 	}
 	
-	public double valueAt(double x, double y){
-		double sum = 0;
+	public float valueAt(double x, double y){
+		float sum = 0;
 		for(int i = 0; i < layers.length; i++){
 			sum += layers[i].getValueAt(x, y);
 		}

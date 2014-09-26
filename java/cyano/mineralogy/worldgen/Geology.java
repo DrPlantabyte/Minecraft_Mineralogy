@@ -1,11 +1,11 @@
 package cyano.mineralogy.worldgen;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import cyano.mineralogy.Mineralogy;
-import cyano.mineralogy.worldgen.math.NoiseLayer3I24x8;
 import cyano.mineralogy.worldgen.math.PerlinNoise2D;
 
 public class Geology {
@@ -25,6 +25,8 @@ public class Geology {
     private static final int addend = 12345;
     /** random implementation */
     private static final int mask = (1 << 31) - 1;
+    /** used to reduce game-time computation by pregenerating random numbers */
+    private final short[] whiteNoiseArray;
     
 	/**
 	 * 
@@ -37,9 +39,15 @@ public class Geology {
 		this.seed = seed;
 		int rockLayerUndertones = 4;
 		int undertoneMultiplier = 1 << (rockLayerUndertones - 1);
-		geomeNoiseLayer = new PerlinNoise2D(~seed,128,geomeSize,2);
-		rockNoiseLayer = new PerlinNoise2D(seed,4*undertoneMultiplier,rockLayerSize*undertoneMultiplier,rockLayerUndertones);
+		geomeNoiseLayer = new PerlinNoise2D(~seed,128,(float)geomeSize,2);
+		rockNoiseLayer = new PerlinNoise2D(seed,(float)(4*undertoneMultiplier),(float)(rockLayerSize*undertoneMultiplier),rockLayerUndertones);
 		this.geomeSize = geomeSize;
+		
+		Random r = new Random(seed);
+		whiteNoiseArray = new short[256];
+		for(int i = 0; i < whiteNoiseArray.length; i++){
+			whiteNoiseArray[i] = (short)r.nextInt(0x7FFF);
+		}
 	}
 	/**
 	 * This method gets the stone replacement for a given coordinate. It does not 
@@ -52,7 +60,7 @@ public class Geology {
 	 */
 	public Block getStoneAt(int x, int y, int z){
 		// new method: 2D perlin noise instead of 3D
-		double geome = geomeNoiseLayer.valueAt(x,z)+y;
+		float geome = geomeNoiseLayer.valueAt(x,z)+y;
 		int rv = (int)rockNoiseLayer.valueAt(x, z) + y;
 		if(geome < -64){
 			// RockType.IGNEOUS;
@@ -69,9 +77,9 @@ public class Geology {
 	
 	public void replaceStoneInChunk(int chunkX, int chunkZ, Block[] blockBuffer)
     {
-		
-		// TODO remove following block that makes air blocks
+
 		// TODO try moving substitution to registered generator instead of provider
+		// TODO remove following block that makes air blocks
 		if(chunkZ % 4 != 0){
 			for(int i = 0; i < blockBuffer.length; i++){blockBuffer[i] = Blocks.air;}
 		}
@@ -79,17 +87,32 @@ public class Geology {
 		int xOffset = chunkX << 4;
 		int zOffset = chunkZ << 4;
 		for(int dx = 0; dx < 16; dx++){
+			int x = xOffset | dx;
 			for(int dz = 0; dz < 16; dz++){
+				int z = zOffset | dz;
 				int indexBase = (dx * 16 + dz) * height;
 				int y = height-1;
 				while(y > 0 && blockBuffer[indexBase+y] == Blocks.air){
 					y--;
 				}
-				Block[] column = this.getStoneColumn(xOffset | dx, zOffset | dz, y);
+				int baseRockVal = (int)rockNoiseLayer.valueAt(x, z);
+				int gbase = (int)geomeNoiseLayer.valueAt(x, z);
+				
+			//	Block[] column = this.getStoneColumn(xOffset | dx, zOffset | dz, y);
 				for(; y > 0; y--){
 					int i = indexBase + y;
 					if(blockBuffer[i] == Blocks.stone){
-						blockBuffer[i] = column[y];
+						int geome = gbase+y;
+						if(geome < -32){
+							// RockType.IGNEOUS;
+							blockBuffer[i] = pickBlockFromList(baseRockVal+y,Mineralogy.igneousStones);
+						} else if(geome < 32){
+							// RockType.METAMORPHIC;
+							blockBuffer[i] = pickBlockFromList(baseRockVal+y+3,Mineralogy.metamorphicStones);
+						} else {
+							// RockType.SEDIMENTARY;
+							blockBuffer[i] = pickBlockFromList(baseRockVal+y+5,Mineralogy.sedimentaryStones);
+						}
 					}
 				}
 			}
@@ -124,28 +147,7 @@ public class Geology {
 	 * @return
 	 */
 	private Block pickBlockFromList(int value, List<Block> list){
-		int i = ((((int)(seed) ^ (value >> 2) ) * multiplier + addend) * multiplier + addend) & 0x7FFFFFFF;
-		i %= list.size();
-		return list.get(i);
+		return list.get(whiteNoiseArray[(value >> 3) & 0xFF] % list.size());
 	}
-	// TODO get noise to look right
-	@Deprecated public static void main(String[] args){
-		int size = 512;
-	//	Geology geome  = new Geology((new java.util.Random()).nextLong(),Mineralogy.GEOME_SIZE, Mineralogy.ROCK_LAYER_SIZE);
-		PerlinNoise2D pn = new PerlinNoise2D(System.currentTimeMillis(), 1, 512, 2);
-		java.awt.image.BufferedImage bimg = new java.awt.image.BufferedImage(size,size,java.awt.image.BufferedImage.TYPE_INT_ARGB);
-		for(int x = 0; x < size; x++){
-			for(int y = 0; y < size; y++){
-			//	double rv = geome.rockNoiseLayer.valueAt(x, y) / 3;
-				double rv = pn.valueAt(x, y);
-				rv = rv - (int)rv;
-				if(rv < 0) rv += 1;
-				bimg.setRGB(x, size - y - 1, java.awt.Color.HSBtoRGB(0f, 0f, (float)rv));
-			}
-		}
-		javax.swing.JOptionPane.showMessageDialog(null, new javax.swing.JLabel(new javax.swing.ImageIcon(bimg)));
-		
-	}
-	
 	
 }
