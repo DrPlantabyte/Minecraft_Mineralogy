@@ -94,7 +94,8 @@ public class Mineralogy
     	addStoneType(RockType.SEDIMENTARY,"conglomerate",1.5,10,0,false,true,true,false);
     	addStoneType(RockType.SEDIMENTARY,"dolomite",3,15,1,true,true,true,false);
     	addStoneType(RockType.SEDIMENTARY,"limestone",1.5,10,0,true,true,true,true);
-    	addStoneType(RockType.SEDIMENTARY,"gypsum",0.75,1,0,false,false,false,false);
+    	addStoneType(RockType.SEDIMENTARY,"gypsum",0.75,1,0,false,false,false,false); // TODO drops gypsum dust
+    	addStoneType(RockType.SEDIMENTARY,"chert",1.5,10,1,false,false,false,false);  // TODO drops flint  
     	sedimentaryStones.add(Blocks.sandstone);
     	sedimentaryStones.add(Blocks.sand);
     	sedimentaryStones.add(Blocks.gravel);
