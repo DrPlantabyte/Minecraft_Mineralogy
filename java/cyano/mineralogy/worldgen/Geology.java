@@ -77,12 +77,11 @@ public class Geology {
 	
 	public void replaceStoneInChunk(int chunkX, int chunkZ, Block[] blockBuffer)
     {
-
-		// TODO try moving substitution to registered generator instead of provider
-		// TODO remove following block that makes air blocks
+		/*
 		if(chunkZ % 4 != 0){
 			for(int i = 0; i < blockBuffer.length; i++){blockBuffer[i] = Blocks.air;}
 		}
+		//*/
 		int height = blockBuffer.length / 256;
 		int xOffset = chunkX << 4;
 		int zOffset = chunkZ << 4;
