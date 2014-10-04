@@ -16,13 +16,16 @@ import com.grack.nanojson.JsonParserException;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -30,17 +33,12 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cyano.mineralogy.blocks.Rock;
+import cyano.mineralogy.blocks.*;
+import cyano.mineralogy.items.*;
 import cyano.mineralogy.worldgen.MineralogyWorldProvider;
-import cyano.mineralogy.worldgen.OrePlacement;
+import cyano.mineralogy.worldgen.OreSpawner;
 
 
-// TODO:
-// add ores, powders, and gems
-// add crucible, metal alloys, and rock hammer
-// add tutorial achievement tree
-// add secret door and dry-wall
-// add villager trades
 
 
 @Mod(modid = Mineralogy.MODID, name=Mineralogy.NAME, version = Mineralogy.VERSION)
@@ -48,7 +46,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "0.1";
+    public static final String VERSION = "1.0";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -57,8 +55,6 @@ public class Mineralogy
     public static final List<Block> igneousStones = new ArrayList<Block>();
     /** all blocks used in this mod (blockID,block)*/
     public static final Map<String,Block> mineralogyBlockRegistry = new HashMap<String,Block>();
-    /** all ores that will be spawned via this mod*/
-    public static final Map<String,OrePlacement> mineralogyOreSpawnRegistry = new HashMap<String,OrePlacement>();
     
     /** size of rock layers */
     public static double ROCK_LAYER_SIZE = 32; 
@@ -66,9 +62,22 @@ public class Mineralogy
     public static int GEOME_SIZE = 100; 
 
  //   public static OrePlacer orePlacementGenerator = null;
+
+    public static Block blockChert;
     
-    public static Block testBlock;
-    public static Item testItem;
+    public static Block blockGypsum;
+    
+    public static Item gypsumPowder;
+    
+    public static Item sulphurPowder;
+    
+    public static Item phosphorousPowder;
+    
+    public static Item nitratePowder; // aka "saltpeter"
+    
+    public static Item mineralFertilizer;
+    
+    public static Block[] drywall = new Block[16];
     
     public final static String CONFIG_CATAGORY_ORES = "ores"; 
     
@@ -93,49 +102,96 @@ public class Mineralogy
     	addStoneType(RockType.SEDIMENTARY,"conglomerate",1.5,10,0,false,true,true,false);
     	addStoneType(RockType.SEDIMENTARY,"dolomite",3,15,1,true,true,true,false);
     	addStoneType(RockType.SEDIMENTARY,"limestone",1.5,10,0,true,true,true,true);
-    	addStoneType(RockType.SEDIMENTARY,"gypsum",0.75,1,0,false,false,false,false); // TODO drops gypsum dust
-    	addStoneType(RockType.SEDIMENTARY,"chert",1.5,10,1,false,false,false,false);  // TODO drops flint  
     	sedimentaryStones.add(Blocks.sandstone);
     	sedimentaryStones.add(Blocks.sand);
     	sedimentaryStones.add(Blocks.gravel);
+    	blockGypsum = new Gypsum();
+    	GameRegistry.registerBlock(blockGypsum, Mineralogy.MODID+"_gypsum");
+    	mineralogyBlockRegistry.put(Mineralogy.MODID+"_gypsum", blockGypsum);
+    	blockChert = new Chert();
+    	GameRegistry.registerBlock(blockChert, Mineralogy.MODID+"_chert");
+    	mineralogyBlockRegistry.put(Mineralogy.MODID+"_chert", blockChert);
+    	sedimentaryStones.add(blockChert);
     	addStoneType(RockType.METAMORPHIC,"slate",1.5,10,0,true,true,true,true);
     	addStoneType(RockType.METAMORPHIC,"schist",3,15,1,true,true,true,false);
     	addStoneType(RockType.METAMORPHIC,"gneiss",3,15,1,true,true,true,false);
     	
-    	// add recipe to make cobblestone
+    	// add recipe to make cobblestone and stone
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Blocks.cobblestone,4),"stone","stone",Blocks.gravel,Blocks.gravel));
     	GameRegistry.addSmelting(Blocks.gravel, new ItemStack(Blocks.stone,1), 0.1f);
     	
-    	// add custom ore generator
-    //	orePlacementGenerator = new OrePlacer();
-    //	GameRegistry.registerWorldGenerator(orePlacementGenerator, 100);
+    	// add items
+    	gypsumPowder = new GypsumDust();
+    	GameRegistry.registerItem(gypsumPowder, GypsumDust.itemName);
+    	OreDictionary.registerOre(GypsumDust.dictionaryName, gypsumPowder);
+    	sulphurPowder = new SulphurDust();
+    	GameRegistry.registerItem(sulphurPowder, SulphurDust.itemName);
+    	OreDictionary.registerOre(SulphurDust.dictionaryName, sulphurPowder);
+    	phosphorousPowder = new PhosphoriteDust();
+    	GameRegistry.registerItem(phosphorousPowder, PhosphoriteDust.itemName);
+    	OreDictionary.registerOre(PhosphoriteDust.dictionaryName, phosphorousPowder);
+    	nitratePowder = new NitrateDust();
+    	GameRegistry.registerItem(nitratePowder, NitrateDust.itemName);
+    	OreDictionary.registerOre(NitrateDust.dictionaryName, nitratePowder);
+    	mineralFertilizer = new MineralFertilizer();
+    	GameRegistry.registerItem(mineralFertilizer, MineralFertilizer.itemName);
+    	OreDictionary.registerOre(MineralFertilizer.dictionaryName, mineralFertilizer);
     	
     	
     	// register ores
-    	/*
-    	if(config.hasCategory(CONFIG_CATAGORY_ORES) == false){
-    		config.addCustomCategoryComment(CONFIG_CATAGORY_ORES, 
-    				"Ore generation is stored as a JSON entry for each ore that you want to spawn, taking the following \nformat:\n" +
-    				"S:XXX={\"BlockID\":\"<mod id>:<block name>\",\"Size\":#,\"Count\":#,\"MinHeight\":#,\"MaxHeight\":#},\n\t\"RockType\":\"ANY|IGNEOUS|SEDIMENTARY|METAMORPHIC\"}\n" +
-    				"Where XXX can be any name you want, <mod id> is the source mod for this block (use minecraft for \nblocks that are part of the original Minecraft game(, " +
-    				"<block name> is the blockID string for the block \nyou want to spawn in the ore deposit, " +
-    				"# is a number, and ANY|IGNEOUS|SEDIMENTARY|METAMORPHIC is the \ngeological formation that you want the ore to spawn in (usually ANY)" +
-    				"For example, the Minecraft default \nspawn rules for gold is as follows:\n" +
-    				"S:oreGold={\"BlockID\":\"minecraft:gold_ore\",\"Size\":9,\"Count\":2,\"MinHeight\":0,\"MaxHeight\":32},\"RockType\":\"ANY\"}\n" +
-    				"And if you wanted glowstone to spawn like ore in the Overworld in volcanic rock layers, you could add \nthe following:\n" +
-    				"S:glowstone={\"BlockID\":\"minecraft:glowstone\",\"Size\":16,\"Count\":1,\"MinHeight\":0,\"MaxHeight\":20},\"RockType\":\"IGNEOUS\"}");
-    		config.get(CONFIG_CATAGORY_ORES, "oreCoal", "{\"BlockID\":\"minecraft:coal_ore\",\"Size\":17,\"Count\":20,\"MinHeight\":0,\"MaxHeight\":128,\"RockType\":\"ANY\"}", "coal ore spawn setting");
-    		config.get(CONFIG_CATAGORY_ORES, "oreIron", "{\"BlockID\":\"minecraft:iron_ore\",\"Size\":9,\"Count\":20,\"MinHeight\":0,\"MaxHeight\":64},\"RockType\":\"ANY\"}", "iron ore spawn setting");
-    		config.get(CONFIG_CATAGORY_ORES, "oreGold", "{\"BlockID\":\"minecraft:gold_ore\",\"Size\":9,\"Count\":2,\"MinHeight\":0,\"MaxHeight\":32},\"RockType\":\"ANY\"}", "gold ore spawn setting");
-    		config.get(CONFIG_CATAGORY_ORES, "oreRedstone", "{\"BlockID\":\"minecraft:redstone_ore\",\"Size\":8,\"Count\":8,\"MinHeight\":0,\"MaxHeight\":16,\"RockType\":\"ANY\"}", "redstone ore spawn setting");
-    		config.get(CONFIG_CATAGORY_ORES, "oreDiamond", "{\"BlockID\":\"minecraft:diamond_ore\",\"Size\":8,\"Count\":1,\"MinHeight\":0,\"MaxHeight\":16,\"RockType\":\"ANY\"}", "diamond ore spawn setting");
-    		config.get(CONFIG_CATAGORY_ORES, "oreLapis", "{\"BlockID\":\"minecraft:lapis_ore\",\"Size\":7,\"Count\":1,\"MinHeight\":0,\"MaxHeight\":32,\"RockType\":\"ANY\"}", "lapis ore spawn setting");
-    		config.get(CONFIG_CATAGORY_ORES, "oreEmerald", "{\"BlockID\":\"minecraft:emerald_ore\",\"Size\":1,\"Count\":8,\"MinHeight\":4,\"MaxHeight\":32,\"RockType\":\"METAMORPHIC\"}", "emerald ore spawn setting (now based on geology rather than biome)");
-    		config.get(CONFIG_CATAGORY_ORES, "clay", "{\"BlockID\":\"minecraft:clay\",\"Size\":16,\"Count\":1,\"MinHeight\":32,\"MaxHeight\":64,\"RockType\":\"SEDIMENTARY\"}", "spawn clay in sedimentary layers");
+    	addOre("sulphur_ore","oreSulphur",sulphurPowder,1,4,0, 
+    			config.getInt("sulphur_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
+    			config.getInt("sulphur_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
+    			config.getInt("sulphur_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
+    			config.getInt("sulphur_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
+    	addOre("phosphorous_ore","orePhosphorous",phosphorousPowder,1,4,0, 
+    			config.getInt("phosphorous_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
+    			config.getInt("phosphorous_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
+    			config.getInt("phosphorous_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
+    			config.getInt("phosphorous_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
+    	addOre("nitrate_ore","oreNitrate",nitratePowder,1,4,0, 
+    			config.getInt("nitrate_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
+    			config.getInt("nitrate_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
+    			config.getInt("nitrate_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
+    			config.getInt("nitrate_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
+    	
+    	
+    	
+    	// add other blocks and recipes
+    	String[] colorSuffixes = {"black","red","green","brown","blue","purple","cyan",
+    			"silver","gray","pink","lime","yellow","light_blue","magenta","orange","white"};
+    	
+    	for(int i = 0; i < 16; i++){
+    		drywall[i] = new DryWall(colorSuffixes[i]);
+    		GameRegistry.registerBlock(drywall[i], Mineralogy.MODID+"_drywall_"+colorSuffixes[i]);
+    		OreDictionary.registerOre("drywall", drywall[i]);
     	}
-    	ConfigCategory ores = config.getCategory(CONFIG_CATAGORY_ORES);
-    	oreProperties = ores.entrySet();
-    	//*/
+    	
+    	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(drywall[7],3),"pgp","pgp","pgp",'p',Items.paper,'g',GypsumDust.dictionaryName));
+    	
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[0] ,1),"drywall","dyeBlack"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[1] ,1),"drywall","dyeRed"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[2] ,1),"drywall","dyeGreen"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[3] ,1),"drywall","dyeBrown"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[4] ,1),"drywall","dyeBlue"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[5] ,1),"drywall","dyePurple"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[6] ,1),"drywall","dyeCyan"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[7] ,1),"drywall","dyeLightGray"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[8] ,1),"drywall","dyeGray"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[9] ,1),"drywall","dyePink"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[10],1),"drywall","dyeLime"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[11],1),"drywall","dyeYellow"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[12],1),"drywall","dyeLightBlue"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[13],1),"drywall","dyeMagenta"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[14],1),"drywall","dyeOrange"));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[15],1),"drywall","dyeWhite"));
+    	
+    	
+
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,3),new ItemStack(Items.coal,1,1),NitrateDust.dictionaryName,SulphurDust.dictionaryName));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,3),Items.sugar,NitrateDust.dictionaryName,SulphurDust.dictionaryName));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(mineralFertilizer,1),NitrateDust.dictionaryName,PhosphoriteDust.dictionaryName));
+    	
     	
    	/*
     	final String blockName = "derp";
@@ -170,24 +226,7 @@ public class Mineralogy
     public void postInit(FMLPostInitializationEvent event)
     {
 		// addons to other mods
-    	/*
-    	// add ores from config file (which may include blocks from other mods)
-    	for(Entry<String,Property> entry : oreProperties){
-    		String depositName = entry.getKey();
-    		Property p = entry.getValue();
-    		Logger.getLogger(MODID).log(Level.INFO, "Adding ore deposit named '"+depositName+"'");
-    		try {
-				OrePlacement deposit = OrePlacement.parseJSON(p.getString());
-				Mineralogy.addOreSpawn(depositName,deposit);
-			} catch (NumberFormatException e) {
-				Logger.getLogger(MODID).log(Level.SEVERE, "Failed to generate OrePlacement instance from JSON object "+p.getString(), e);
-			} catch (IllegalArgumentException e) {
-				Logger.getLogger(MODID).log(Level.SEVERE, "Failed to generate OrePlacement instance from JSON object "+p.getString(), e);
-			} catch (JsonParserException e) {
-				Logger.getLogger(MODID).log(Level.SEVERE, "Failed to generate OrePlacement instance from JSON object "+p.getString(), e);
-			}
-    	}
-    	//*/
+    	
     	
     	/*
     	System.out.println("Ore Dictionary Registry:");
@@ -200,15 +239,20 @@ public class Mineralogy
     	}
     	//*/
     }
-    /**
-     * Registers a new ore to spawn in the world.  
-     * @param spawnKey A unique name for this ore spawn
-     * @param deposit An OrePlacement object defining the rules for the spawning of this ore.
-     */
-    public static void addOreSpawn(String spawnKey, OrePlacement deposit) {
-    	mineralogyOreSpawnRegistry.put(spawnKey, deposit);
-	}
+    
 
+    private static int oreWeightCount = 20;
+    
+    private static void addOre(String oreName, String oreDictionaryName, Item oreDropItem, int numMin, int numMax, int pickLevel,
+    		int minY, int maxY, int spawnFrequency, int spawnQuantity){
+    	String oreBlockName = Mineralogy.MODID+"_"+oreName;
+    	Block oreBlock = new Ore(oreName,oreDropItem,numMin,numMax,pickLevel);
+    	GameRegistry.registerBlock(oreBlock, oreBlockName); // MUST REGISTER BLOCK WITH GAME BEFORE DOING ANYTHING ELSE WITH IT!!!
+    	mineralogyBlockRegistry.put(oreBlockName, oreBlock);
+    	OreDictionary.registerOre(oreDictionaryName, oreBlock);
+    	GameRegistry.registerWorldGenerator(new OreSpawner(oreBlock,minY,maxY,spawnFrequency,spawnQuantity, (oreWeightCount * 25214903917L)+11L), oreWeightCount++);
+    	
+    }
 	/**
      * 
      * @param type Igneous, sedimentary, or metamorphic
