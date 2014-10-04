@@ -33,7 +33,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cyano.mineralogy.blocks.Rock;
 import cyano.mineralogy.worldgen.MineralogyWorldProvider;
 import cyano.mineralogy.worldgen.OrePlacement;
-import cyano.mineralogy.worldgen.OrePlacer;
 
 
 // TODO:
@@ -66,7 +65,7 @@ public class Mineralogy
     /** size of mineral biomes */
     public static int GEOME_SIZE = 100; 
 
-    public static OrePlacer orePlacementGenerator = null;
+ //   public static OrePlacer orePlacementGenerator = null;
     
     public static Block testBlock;
     public static Item testItem;
@@ -108,21 +107,22 @@ public class Mineralogy
     	GameRegistry.addSmelting(Blocks.gravel, new ItemStack(Blocks.stone,1), 0.1f);
     	
     	// add custom ore generator
-    	orePlacementGenerator = new OrePlacer();
-    	GameRegistry.registerWorldGenerator(orePlacementGenerator, 100);
+    //	orePlacementGenerator = new OrePlacer();
+    //	GameRegistry.registerWorldGenerator(orePlacementGenerator, 100);
     	
     	
     	// register ores
+    	/*
     	if(config.hasCategory(CONFIG_CATAGORY_ORES) == false){
     		config.addCustomCategoryComment(CONFIG_CATAGORY_ORES, 
-    				"Ore generation is stored as a JSON entry for each ore that you want to spawn, taking the following format:\n" +
-    				"S:XXX={\"BlockID\":\"<mod id>:<block name>\",\"Size\":#,\"Count\":#,\"MinHeight\":#,\"MaxHeight\":#},\"RockType\":\"ANY|IGNEOUS|SEDIMENTARY|METAMORPHIC\"}\n" +
-    				"Where XXX can be any name you want, <mod id> is the source mod for this block (use minecraft for blocks that are part of the original Minecraft game(, " +
-    				"<block name> is the blockID string for the block you want to spawn in the ore deposit, " +
-    				"# is a number, and ANY|IGNEOUS|SEDIMENTARY|METAMORPHIC is the geological formation that you want the ore to spawn in (usually ANY)" +
-    				"For example, the Minecraft default spawn rules for gold is as follows:\n" +
+    				"Ore generation is stored as a JSON entry for each ore that you want to spawn, taking the following \nformat:\n" +
+    				"S:XXX={\"BlockID\":\"<mod id>:<block name>\",\"Size\":#,\"Count\":#,\"MinHeight\":#,\"MaxHeight\":#},\n\t\"RockType\":\"ANY|IGNEOUS|SEDIMENTARY|METAMORPHIC\"}\n" +
+    				"Where XXX can be any name you want, <mod id> is the source mod for this block (use minecraft for \nblocks that are part of the original Minecraft game(, " +
+    				"<block name> is the blockID string for the block \nyou want to spawn in the ore deposit, " +
+    				"# is a number, and ANY|IGNEOUS|SEDIMENTARY|METAMORPHIC is the \ngeological formation that you want the ore to spawn in (usually ANY)" +
+    				"For example, the Minecraft default \nspawn rules for gold is as follows:\n" +
     				"S:oreGold={\"BlockID\":\"minecraft:gold_ore\",\"Size\":9,\"Count\":2,\"MinHeight\":0,\"MaxHeight\":32},\"RockType\":\"ANY\"}\n" +
-    				"And if you wanted glowstone to spawn like ore in the Overworld in volcanic rock layers, you could add the following:\n" +
+    				"And if you wanted glowstone to spawn like ore in the Overworld in volcanic rock layers, you could add \nthe following:\n" +
     				"S:glowstone={\"BlockID\":\"minecraft:glowstone\",\"Size\":16,\"Count\":1,\"MinHeight\":0,\"MaxHeight\":20},\"RockType\":\"IGNEOUS\"}");
     		config.get(CONFIG_CATAGORY_ORES, "oreCoal", "{\"BlockID\":\"minecraft:coal_ore\",\"Size\":17,\"Count\":20,\"MinHeight\":0,\"MaxHeight\":128,\"RockType\":\"ANY\"}", "coal ore spawn setting");
     		config.get(CONFIG_CATAGORY_ORES, "oreIron", "{\"BlockID\":\"minecraft:iron_ore\",\"Size\":9,\"Count\":20,\"MinHeight\":0,\"MaxHeight\":64},\"RockType\":\"ANY\"}", "iron ore spawn setting");
@@ -135,7 +135,7 @@ public class Mineralogy
     	}
     	ConfigCategory ores = config.getCategory(CONFIG_CATAGORY_ORES);
     	oreProperties = ores.entrySet();
-    	
+    	//*/
     	
    	/*
     	final String blockName = "derp";
@@ -170,7 +170,7 @@ public class Mineralogy
     public void postInit(FMLPostInitializationEvent event)
     {
 		// addons to other mods
-    	
+    	/*
     	// add ores from config file (which may include blocks from other mods)
     	for(Entry<String,Property> entry : oreProperties){
     		String depositName = entry.getKey();
@@ -187,8 +187,9 @@ public class Mineralogy
 				Logger.getLogger(MODID).log(Level.SEVERE, "Failed to generate OrePlacement instance from JSON object "+p.getString(), e);
 			}
     	}
+    	//*/
     	
-    	
+    	/*
     	System.out.println("Ore Dictionary Registry:");
     	for(String s : OreDictionary.getOreNames()){
     		System.out.print(s+":");
@@ -197,6 +198,7 @@ public class Mineralogy
     		}
     		System.out.println();
     	}
+    	//*/
     }
     /**
      * Registers a new ore to spawn in the world.  

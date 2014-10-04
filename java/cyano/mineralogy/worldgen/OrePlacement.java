@@ -82,6 +82,10 @@ public class OrePlacement {
 		}
 		String blockID = blockString.substring(blockString.indexOf(':')+1, blockString.length());
 		String modID = blockString.substring(0,blockString.indexOf(':'));
+		Block block = GameRegistry.findBlock(modID, blockID);
+		if(block == null){
+			throw new IllegalArgumentException("Block "+modID+":"+blockID+" does not exist in block registry.");
+		}
 		
 		float frequency = input.getFloat("Count");
 		if(frequency <= 0.0f || input.containsKey("Count") == false){
@@ -99,10 +103,7 @@ public class OrePlacement {
 		if(maxY <= minY ){
 			throw new IllegalArgumentException("OrePlacement JSON string "+json+" must have member variable \"MaxHeight\" set to a positive integer that is greator than value of \"MinHeight\".");
 		}
-		Block block = GameRegistry.findBlock(modID, blockID);
-		if(block == null){
-			throw new IllegalArgumentException("Block "+modID+":"+blockID+" does not exist in block registry.");
-		}
+		
 		if(input.containsKey("RockType") == false){
 			return new OrePlacement(block,frequency,size,minY,maxY);
 		}else{
