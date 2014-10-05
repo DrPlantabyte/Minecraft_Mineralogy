@@ -106,11 +106,11 @@ public class Mineralogy
     	sedimentaryStones.add(Blocks.sand);
     	sedimentaryStones.add(Blocks.gravel);
     	blockGypsum = new Gypsum();
-    	GameRegistry.registerBlock(blockGypsum, Mineralogy.MODID+"_gypsum");
-    	mineralogyBlockRegistry.put(Mineralogy.MODID+"_gypsum", blockGypsum);
+    	GameRegistry.registerBlock(blockGypsum, "gypsum");
+    	mineralogyBlockRegistry.put("gypsum", blockGypsum);
     	blockChert = new Chert();
-    	GameRegistry.registerBlock(blockChert, Mineralogy.MODID+"_chert");
-    	mineralogyBlockRegistry.put(Mineralogy.MODID+"_chert", blockChert);
+    	GameRegistry.registerBlock(blockChert,"chert");
+    	mineralogyBlockRegistry.put("chert", blockChert);
     	sedimentaryStones.add(blockChert);
     	addStoneType(RockType.METAMORPHIC,"slate",1.5,10,0,true,true,true,true);
     	addStoneType(RockType.METAMORPHIC,"schist",3,15,1,true,true,true,false);
@@ -124,9 +124,9 @@ public class Mineralogy
     	gypsumPowder = new GypsumDust();
     	GameRegistry.registerItem(gypsumPowder, GypsumDust.itemName);
     	OreDictionary.registerOre(GypsumDust.dictionaryName, gypsumPowder);
-    	sulphurPowder = new SulphurDust();
-    	GameRegistry.registerItem(sulphurPowder, SulphurDust.itemName);
-    	OreDictionary.registerOre(SulphurDust.dictionaryName, sulphurPowder);
+    	sulphurPowder = new SulfurDust();
+    	GameRegistry.registerItem(sulphurPowder, SulfurDust.itemName);
+    	OreDictionary.registerOre(SulfurDust.dictionaryName, sulphurPowder);
     	phosphorousPowder = new PhosphoriteDust();
     	GameRegistry.registerItem(phosphorousPowder, PhosphoriteDust.itemName);
     	OreDictionary.registerOre(PhosphoriteDust.dictionaryName, phosphorousPowder);
@@ -139,7 +139,7 @@ public class Mineralogy
     	
     	
     	// register ores
-    	addOre("sulphur_ore","oreSulphur",sulphurPowder,1,4,0, 
+    	addOre("sulfur_ore","oreSulfur",sulphurPowder,1,4,0, 
     			config.getInt("sulphur_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
     			config.getInt("sulphur_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
     			config.getInt("sulphur_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
@@ -163,7 +163,7 @@ public class Mineralogy
     	
     	for(int i = 0; i < 16; i++){
     		drywall[i] = new DryWall(colorSuffixes[i]);
-    		GameRegistry.registerBlock(drywall[i], Mineralogy.MODID+"_drywall_"+colorSuffixes[i]);
+    		GameRegistry.registerBlock(drywall[i], "drywall_"+colorSuffixes[i]);
     		OreDictionary.registerOre("drywall", drywall[i]);
     	}
     	
@@ -188,8 +188,8 @@ public class Mineralogy
     	
     	
 
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,3),new ItemStack(Items.coal,1,1),NitrateDust.dictionaryName,SulphurDust.dictionaryName));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,3),Items.sugar,NitrateDust.dictionaryName,SulphurDust.dictionaryName));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,4),new ItemStack(Items.coal,1,1),NitrateDust.dictionaryName,SulfurDust.dictionaryName));
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,4),Items.sugar,NitrateDust.dictionaryName,SulfurDust.dictionaryName));
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(mineralFertilizer,1),NitrateDust.dictionaryName,PhosphoriteDust.dictionaryName));
     	
     	
@@ -247,8 +247,8 @@ public class Mineralogy
     		int minY, int maxY, int spawnFrequency, int spawnQuantity){
     	String oreBlockName = Mineralogy.MODID+"_"+oreName;
     	Block oreBlock = new Ore(oreName,oreDropItem,numMin,numMax,pickLevel);
-    	GameRegistry.registerBlock(oreBlock, oreBlockName); // MUST REGISTER BLOCK WITH GAME BEFORE DOING ANYTHING ELSE WITH IT!!!
-    	mineralogyBlockRegistry.put(oreBlockName, oreBlock);
+    	GameRegistry.registerBlock(oreBlock, oreName); // MUST REGISTER BLOCK WITH GAME BEFORE DOING ANYTHING ELSE WITH IT!!!
+    	mineralogyBlockRegistry.put(oreName, oreBlock);
     	OreDictionary.registerOre(oreDictionaryName, oreBlock);
     	GameRegistry.registerWorldGenerator(new OreSpawner(oreBlock,minY,maxY,spawnFrequency,spawnQuantity, (oreWeightCount * 25214903917L)+11L), oreWeightCount++);
     	

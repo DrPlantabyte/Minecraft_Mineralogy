@@ -47,12 +47,12 @@ tile.mineralogy_drywall_cyan.name=Cyan Drywall
 tile.mineralogy_drywall_brown.name=Brown Drywall
 tile.mineralogy_drywall_yellow.name=Yellow Drywall
 tile.mineralogy_drywall_lime.name=Bright Green Drywall
-tile.mineralogy_sulphur_ore.name=Sulphur
+tile.mineralogy_sulfur_ore.name=Sulfur
 tile.mineralogy_phosphorous_ore.name=Phosphorite
 tile.mineralogy_nitrate_ore.name=Saltpeter
 
 item.mineralogy_gypsum_dust.name=Powdered Gypsum
-item.mineralogy_sulphur_dust.name=Powdered Sulphur
+item.mineralogy_sulfur_dust.name=Powdered Sulfur
 item.mineralogy_phosphorous_dust.name=Powdered Phosphorous
 item.mineralogy_nitrate_dust.name=Powdered Saltpeter
 item.mineralogy_mineral_fertilizer.name=Ferilizer

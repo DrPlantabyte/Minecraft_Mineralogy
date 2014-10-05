@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "mineralogy",
+  "name": "Mineralogy",
+  "description": "Fills the world with real-world rocks",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/cyanobacterium/Minecraft_Mineralogy",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["Cyanobacterium"],
+  "credits": "The Forge and FML guys, for making the Forge modding API (you guys are awesome), geologists everywhere, and the mod author Cyanobacterium (aka Synechocystis)",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
