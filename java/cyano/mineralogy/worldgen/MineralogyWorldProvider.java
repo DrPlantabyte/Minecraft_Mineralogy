@@ -14,10 +14,12 @@ public class MineralogyWorldProvider extends WorldProviderSurface {
 	@Override
     public IChunkProvider createChunkGenerator()
     {
-		if(terrainType == WorldType.FLAT){
-			return super.createChunkGenerator();
-		}
-        return new MineralogyChunkGenerator(worldObj, worldObj.getSeed(), worldObj.getWorldInfo().isMapFeaturesEnabled(), field_82913_c, terrainType);
+		// Lost ability to check for flat worlds?
+		//if(terrainType == WorldType.FLAT){
+		//	return super.createChunkGenerator();
+		//}
+		String generatorOptionsString = worldObj.getWorldInfo().getGeneratorOptions();
+        return new MineralogyChunkGenerator(worldObj, worldObj.getSeed(), worldObj.getWorldInfo().isMapFeaturesEnabled(), generatorOptionsString, worldObj.getWorldType());
     }
 	
 }

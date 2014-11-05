@@ -1,0 +1,7 @@
+{
+    "parent": "block/pane_ne",
+    "textures": {
+        "edge": "mineralogy:blocks/drywall_top",
+        "pane": "mineralogy:blocks/drywall_pink"
+    }
+}

@@ -5,6 +5,10 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.ChunkPrimer;
 import cyano.mineralogy.Mineralogy;
 import cyano.mineralogy.worldgen.math.PerlinNoise2D;
 
@@ -118,6 +122,87 @@ public class Geology {
 		} 
 		
     }
+	public void replaceStoneInChunk(int chunkX, int chunkZ, ChunkPrimer blockBuffer) {
+		/*
+		if(chunkZ % 4 != 0){
+			for(int i = 0; i < blockBuffer.length; i++){blockBuffer[i] = Blocks.air;}
+		}
+		//*/
+		int height = 255;
+		int xOffset = chunkX << 4;
+		int zOffset = chunkZ << 4;
+		for(int dx = 0; dx < 16; dx++){
+			int x = xOffset | dx;
+			for(int dz = 0; dz < 16; dz++){
+				int z = zOffset | dz;
+				int indexBase = (dx * 16 + dz) * height;
+				int y = height-1;
+				while(y > 0 && blockBuffer.getBlockState(x, y, z).getBlock().equals(Blocks.air)){
+					y--;
+				}
+				int baseRockVal = (int)rockNoiseLayer.valueAt(x, z);
+				int gbase = (int)geomeNoiseLayer.valueAt(x, z);
+				
+			//	Block[] column = this.getStoneColumn(xOffset | dx, zOffset | dz, y);
+				for(; y > 0; y--){
+					int i = indexBase + y;
+					if(blockBuffer.getBlockState(x, y, z).getBlock().equals(Blocks.stone)){
+						int geome = gbase+y;
+						if(geome < -32){
+							// RockType.IGNEOUS;
+							blockBuffer.setBlockState(x,y,z, pickBlockFromList(baseRockVal+y,Mineralogy.igneousStones).getDefaultState());
+						} else if(geome < 32){
+							// RockType.METAMORPHIC;
+							blockBuffer.setBlockState(x,y,z, pickBlockFromList(baseRockVal+y,Mineralogy.metamorphicStones).getDefaultState());
+						} else {
+							// RockType.SEDIMENTARY;
+							blockBuffer.setBlockState(x,y,z, pickBlockFromList(baseRockVal+y,Mineralogy.sedimentaryStones).getDefaultState());
+						}
+					}
+				}
+			}
+		} 
+	}
+	public void replaceStoneInChunk(int chunkX, int chunkZ, World world) {
+		Chunk chunk = world.getChunkFromChunkCoords(chunkX, chunkZ);
+		int xOffset = chunkX << 4;
+		int zOffset = chunkZ << 4;
+		for(int dx = 0; dx < 16; dx++){
+			int x = xOffset | dx;
+			for(int dz = 0; dz < 16; dz++){
+				int z = zOffset | dz;
+				int height = 255;//chunk.getHeight(dx, dz);
+				int indexBase = (dx * 16 + dz) * height;
+				int y = chunk.getHeight(dx, dz);//height-1;
+				while(y > 0 && world.isAirBlock(new BlockPos(x, y, z))){
+					y--;
+				}
+				int baseRockVal = (int)rockNoiseLayer.valueAt(x, z);
+				int gbase = (int)geomeNoiseLayer.valueAt(x, z);
+				
+			//	Block[] column = this.getStoneColumn(xOffset | dx, zOffset | dz, y);
+				for(; y > 0; y--){
+					BlockPos coord = new BlockPos(x, y, z);
+					int i = indexBase + y;
+					if(chunk.getBlockState(coord).getBlock().getUnlocalizedName().equals(Blocks.stone.getUnlocalizedName())){
+						int geome = gbase+y;
+						if(geome < -32){
+							// RockType.IGNEOUS;
+							chunk.setBlockState(coord, pickBlockFromList(baseRockVal+y,Mineralogy.igneousStones).getDefaultState());
+						} else if(geome < 32){
+							// RockType.METAMORPHIC;
+							chunk.setBlockState(coord, pickBlockFromList(baseRockVal+y,Mineralogy.metamorphicStones).getDefaultState());
+						} else {
+							// RockType.SEDIMENTARY;
+							chunk.setBlockState(coord, pickBlockFromList(baseRockVal+y,Mineralogy.sedimentaryStones).getDefaultState());
+						}
+					}
+				}
+			}
+		}
+		chunk.setModified(true);
+		
+	}
 	
 	public Block[] getStoneColumn(int x, int z, int height){
 		Block[] col = new Block[height];
@@ -148,5 +233,6 @@ public class Geology {
 	private Block pickBlockFromList(int value, List<Block> list){
 		return list.get(whiteNoiseArray[(value >> 3) & 0xFF] % list.size());
 	}
+	
 	
 }

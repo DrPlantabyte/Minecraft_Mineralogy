@@ -1,28 +1,19 @@
 package cyano.mineralogy.worldgen;
 
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.CAVE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.MINESHAFT;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.RAVINE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.STRONGHOLD;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.VILLAGE;
 
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.common.eventhandler.Event.Result;
-
 import cyano.mineralogy.Mineralogy;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
-import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.ChunkProviderGenerate;
 import net.minecraft.world.gen.MapGenBase;
@@ -32,9 +23,6 @@ import net.minecraft.world.gen.structure.MapGenMineshaft;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraft.world.gen.structure.MapGenStronghold;
 import net.minecraft.world.gen.structure.MapGenVillage;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.terraingen.ChunkProviderEvent;
-import net.minecraftforge.event.terraingen.TerrainGen;
 
 /**
  * Replaces minecraft generic stone with new mineralogy stone blocks
@@ -53,7 +41,7 @@ public class MineralogyChunkGenerator extends ChunkProviderGenerate{
 	
 	public MineralogyChunkGenerator(World world, long seed,
 			boolean mapFeaturesEnabled, String generatorOptionsString, WorldType worldType) {
-		super(world,seed,mapFeaturesEnabled);
+		super(world,seed,mapFeaturesEnabled,generatorOptionsString);
 		this.worldType = worldType;
 		this.worldObj = world;
 		this.generatorOptionsString = generatorOptionsString;
@@ -78,37 +66,49 @@ public class MineralogyChunkGenerator extends ChunkProviderGenerate{
     private MapGenBase ravineGenerator = new MapGenRavine();
     /** The biomes that are used to generate the chunk */
     private BiomeGenBase[] biomesForGeneration;
-    {
+    
+ // TODO: Forge update:	
+    /*{
         caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, CAVE);
         strongholdGenerator = (MapGenStronghold) TerrainGen.getModdedMapGen(strongholdGenerator, STRONGHOLD);
         villageGenerator = (MapGenVillage) TerrainGen.getModdedMapGen(villageGenerator, VILLAGE);
         mineshaftGenerator = (MapGenMineshaft) TerrainGen.getModdedMapGen(mineshaftGenerator, MINESHAFT);
         scatteredFeatureGenerator = (MapGenScatteredFeature) TerrainGen.getModdedMapGen(scatteredFeatureGenerator, SCATTERED_FEATURE);
         ravineGenerator = TerrainGen.getModdedMapGen(ravineGenerator, RAVINE);
-    }
+    }*/
 	
-	@Override public Chunk provideChunk(int chunkX, int chunkY)
+	@Override public Chunk provideChunk(int chunkX, int chunkZ)
     {
-        this.rand.setSeed((long)chunkX * 341873128712L + (long)chunkY * 132897987541L);
-        Block[] ablock = new Block[65536];
+		ChunkPrimer ablock = new ChunkPrimer();
+        this.rand.setSeed((long)chunkX * 341873128712L + (long)chunkZ * 132897987541L);
+       /* Block[] ablock = new Block[65536];
         byte[] abyte = new byte[65536];
         this.func_147424_a(chunkX, chunkY, ablock);
         this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, chunkX * 16, chunkY * 16, 16, 16);
         this.replaceBlocksForBiome(chunkX, chunkY, ablock, abyte, this.biomesForGeneration);
         this.caveGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
-        this.ravineGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
+        this.ravineGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);*/
+        this.func_180518_a(chunkX, chunkZ, ablock);
+        this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, chunkX * 16, chunkZ * 16, 16, 16);
+        this.func_180517_a(chunkX, chunkZ, ablock, this.biomesForGeneration);
+        this.caveGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, ablock);
+        this.ravineGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, ablock);
         
-        geome.replaceStoneInChunk(chunkX,chunkY,ablock);
+        geome.replaceStoneInChunk(chunkX,chunkZ,ablock);
 
         if (this.mapFeaturesEnabled)
         {
-            this.mineshaftGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
-            this.villageGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
-            this.strongholdGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
-            this.scatteredFeatureGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
+         //   this.mineshaftGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
+         //   this.villageGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
+         //   this.strongholdGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
+         //   this.scatteredFeatureGenerator.func_151539_a(this, this.worldObj, chunkX, chunkY, ablock);
+        	this.mineshaftGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, ablock);
+            this.villageGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, ablock);
+            this.strongholdGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, ablock);
+            this.scatteredFeatureGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, ablock);
         }
 
-        Chunk chunk = new Chunk(this.worldObj, ablock, abyte, chunkX, chunkY);
+        Chunk chunk = new Chunk(this.worldObj, ablock,  chunkX, chunkZ);
         byte[] abyte1 = chunk.getBiomeArray();
 
         for (int k = 0; k < abyte1.length; ++k)

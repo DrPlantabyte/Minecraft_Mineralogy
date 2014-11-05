@@ -4,10 +4,11 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import cpw.mods.fml.common.IWorldGenerator;
+import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class OreSpawner implements IWorldGenerator {
 
@@ -20,7 +21,8 @@ public class OreSpawner implements IWorldGenerator {
 	private final Block ore;
 	
 	public OreSpawner(Block oreBlock, int minHeight, int maxHeight, int spawnFrequency, int spawnQuantity, long hash){
-		oreGen = new WorldGenMinable(oreBlock, 0, spawnQuantity, Blocks.stone);
+	//	oreGen = new WorldGenMinable(oreBlock, 0, spawnQuantity, Blocks.stone);
+		oreGen = new WorldGenMinable(oreBlock.getDefaultState(),spawnQuantity);
 		frequency = spawnFrequency;
 		minY = minHeight;
 		maxY = maxHeight;
@@ -38,7 +40,7 @@ public class OreSpawner implements IWorldGenerator {
             int y = random.nextInt(maxY - minY) + minY;
             int z = (chunkZ << 4) + random.nextInt(16);
         //    System.out.println("Generating deposite of "+ore.getUnlocalizedName()+" at ("+x+","+y+","+z+")");
-            oreGen.generate(world, random, x, y, z);
+            oreGen.generate(world, random, new BlockPos(x,y,z));
 		}
 	}
 
