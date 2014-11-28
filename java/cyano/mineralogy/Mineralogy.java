@@ -38,7 +38,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "2.0";
+    public static final String VERSION = "2.1";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -233,6 +233,14 @@ public class Mineralogy
     	GameRegistry.registerWorldGenerator(new StoneReplacer(), 10);
     	
     	// register item rendering for blocks
+    	if(event.getSide().isClient()){
+    		registerItemRenders();
+    	}
+    }
+    
+    
+    private void registerItemRenders(){
+    	
     	for(String name : mineralogyBlockRegistry.keySet()){
     		Block b = Mineralogy.mineralogyBlockRegistry.get(name);
     		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
@@ -265,7 +273,6 @@ public class Mineralogy
 		.register(mineralFertilizer, 0, 
 			new ModelResourceLocation(Mineralogy.MODID+":"+MineralFertilizer.itemName, "inventory"));
     }
-    
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
