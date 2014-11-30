@@ -24,7 +24,7 @@ public class Ore extends Block {
 		this.setHardness((float)1.5); // dirt is 0.5, grass is 0.6, stone is 1.5,iron ore is 3, obsidian is 50
 		this.setResistance((float)5); // dirt is 0, iron ore is 5, stone is 10, obsidian is 2000
 		this.setStepSound(Block.soundTypePiston); // sound for stone
-		// TODO: Forge update:	this.setHarvestLevel("pickaxe", pickLevel);
+		this.setHarvestLevel("pickaxe", pickLevel);
 		dropItem = oreDrop;
 		dropAdduct = minNumberDropped;
 		dropRange = (maxNumberDropped - minNumberDropped) + 1;

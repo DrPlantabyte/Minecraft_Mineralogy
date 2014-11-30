@@ -590,7 +590,6 @@ public final class JsonParser {
 				utf8adjust += 3;
 				break;
 			case 2:
-				// TODO: \uFFFD (replacement char)
 				int codepoint = (c & 3) << 24 | (buffer[index++] & 0x3f) << 18 | (buffer[index++] & 0x3f) << 12
 						| (buffer[index++] & 0x3f) << 6 | (buffer[index++] & 0x3f);
 				throw createParseException(null,
