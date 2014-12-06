@@ -39,7 +39,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "2.2";
+    public static final String VERSION = "2.2.1";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -159,7 +159,6 @@ public class Mineralogy
     	
     	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(drywall[7],3),"pgp","pgp","pgp",'p',Items.paper,'g',GypsumDust.dictionaryName));
     	
-    	
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[0] ,1),"drywall","dyeBlack"));
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[1] ,1),"drywall","dyeRed"));
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[2] ,1),"drywall","dyeGreen"));
@@ -188,6 +187,9 @@ public class Mineralogy
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
+    	// testing
+    	GameRegistry.registerBlock(new MetaBlockTest(),"metablocktest");
+    	
 		// event registration, tile entities, renderers
     	
     	// register custom chunk generation

@@ -26,7 +26,7 @@ public class MineralFertilizer extends Item{
 	private final ItemStack phantomBonemeal = new ItemStack(Items.dye,1,15); 
 	
 	@Override public boolean onItemUse(ItemStack srcItemStack, EntityPlayer playerEntity, World world, BlockPos target, EnumFacing face, float par8, float par9, float par10){
-		boolean canUse = ItemDye.func_179234_a(srcItemStack,world,target);//ItemDye.applyBonemeal(srcItemStack,world,target);
+		boolean canUse = ItemDye.applyBonemeal(srcItemStack,world,target,playerEntity);
 		if(canUse){
 			phantomBonemeal.stackSize = 27;
 			for(int dx = -1; dx <= 1; dx++){
@@ -34,7 +34,7 @@ public class MineralFertilizer extends Item{
 					for(int dz = -1; dz <= 1; dz++){
 						if((dx | dy | dz) == 0) continue;
 						BlockPos t = target.add(dx, dy, dz);
-						ItemDye.func_179234_a(phantomBonemeal,world,t);//ItemDye.applyBonemeal(phantomBonemeal,world,t);
+						ItemDye.applyBonemeal(phantomBonemeal,world,t,playerEntity);
 					}
 				}
 			}

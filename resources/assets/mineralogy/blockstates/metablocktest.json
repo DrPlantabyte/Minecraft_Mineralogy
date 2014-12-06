@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "normal": { "model": "mineralogy:chert" }
+        "variant_1": { "model": "mineralogy:limestone" }
+        "variant_2": { "model": "mineralogy:pegmatite" }
+        "variant_3": { "model": "mineralogy:shale" }
+    }
+}
