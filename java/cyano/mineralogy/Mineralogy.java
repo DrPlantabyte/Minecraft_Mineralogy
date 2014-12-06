@@ -187,8 +187,6 @@ public class Mineralogy
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-    	// testing
-    	GameRegistry.registerBlock(new MetaBlockTest(),"metablocktest");
     	
 		// event registration, tile entities, renderers
     	
