@@ -39,7 +39,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "2.2.1";
+    public static final String VERSION = "2.2.2";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -110,9 +110,6 @@ public class Mineralogy
     	addStoneType(RockType.METAMORPHIC,"schist",3,15,1,false,true,true,false);
     	addStoneType(RockType.METAMORPHIC,"gneiss",3,15,1,false,true,true,false);
     	
-    	// add recipe to make cobblestone and stone
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Blocks.cobblestone,4),"stone","stone",Blocks.gravel,Blocks.gravel));
-    	
     	// add items
     	gypsumPowder = new GypsumDust();
     	GameRegistry.registerItem(gypsumPowder, GypsumDust.itemName);
@@ -180,6 +177,8 @@ public class Mineralogy
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,4),new ItemStack(Items.coal,1,1),NitrateDust.dictionaryName,SulfurDust.dictionaryName));
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,4),Items.sugar,NitrateDust.dictionaryName,SulfurDust.dictionaryName));
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(mineralFertilizer,1),NitrateDust.dictionaryName,PhosphoriteDust.dictionaryName));
+    	
+    	GameRegistry.addSmelting(Blocks.gravel, new ItemStack(Blocks.stone), 0f);
     	
     	config.save();
     }
@@ -303,14 +302,16 @@ public class Mineralogy
 	    		igneousStones.add(b);
 	    		break;
     	}
+    	
+		List<ItemStack> recipeInputs = new ArrayList<ItemStack>(4);
+		recipeInputs.add(new ItemStack(Blocks.gravel));
+		recipeInputs.add(new ItemStack(Blocks.gravel));
+		recipeInputs.add(new ItemStack(b));
+		recipeInputs.add(new ItemStack(b));
+    	GameRegistry.addRecipe(new net.minecraft.item.crafting.ShapelessRecipes(new ItemStack(Blocks.cobblestone,4), recipeInputs));
+    	
     	if(isStoneEquivalent){
     		OreDictionary.registerOre("stone", b);
-    		List<ItemStack> recipeInputs = new ArrayList<ItemStack>(4);
-    		recipeInputs.add(new ItemStack(Blocks.gravel));
-    		recipeInputs.add(new ItemStack(Blocks.gravel));
-    		recipeInputs.add(new ItemStack(b));
-    		recipeInputs.add(new ItemStack(b));
-        	GameRegistry.addRecipe(new net.minecraft.item.crafting.ShapelessRecipes(new ItemStack(Blocks.cobblestone,4), recipeInputs));
     	}
     	if(isCobblestoneEquivalent){
     		OreDictionary.registerOre("cobblestone", b);
