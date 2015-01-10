@@ -309,16 +309,7 @@ public class Mineralogy
 	    		break;
     	}
     	
-		List<ItemStack> recipeInputs = new ArrayList<ItemStack>(4);
-		recipeInputs.add(new ItemStack(Blocks.gravel));
-		recipeInputs.add(new ItemStack(Blocks.gravel));
-		recipeInputs.add(new ItemStack(b));
-		recipeInputs.add(new ItemStack(b));
-    	GameRegistry.addRecipe(new net.minecraft.item.crafting.ShapelessRecipes(new ItemStack(Blocks.cobblestone,4), recipeInputs));
-    	
-    	
-		OreDictionary.registerOre("cobblestone", b);
-		GameRegistry.addSmelting(b, new ItemStack(Blocks.stone,1), 0.1f);
+    	doRockRecipes(b);
     	
     	if(hasSmooth){
     		String smoothName = name + "_smooth";
@@ -341,5 +332,18 @@ public class Mineralogy
     	}
     }
 
+    
+    private static void doRockRecipes(Block b){
+    	List<ItemStack> recipeInputs = new ArrayList<ItemStack>(4);
+		recipeInputs.add(new ItemStack(Blocks.gravel));
+		recipeInputs.add(new ItemStack(Blocks.gravel));
+		recipeInputs.add(new ItemStack(b));
+		recipeInputs.add(new ItemStack(b));
+    	GameRegistry.addRecipe(new net.minecraft.item.crafting.ShapelessRecipes(new ItemStack(Blocks.cobblestone,4), recipeInputs));
+    	
+    	
+		OreDictionary.registerOre("cobblestone", b);
+		GameRegistry.addSmelting(b, new ItemStack(Blocks.stone,1), 0.1f);
+    }
     
 }
