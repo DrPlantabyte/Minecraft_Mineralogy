@@ -112,6 +112,7 @@ public class Mineralogy
     	GameRegistry.registerBlock(blockChert,"chert");
     	mineralogyBlockRegistry.put("chert", blockChert);
     	sedimentaryStones.add(blockChert);
+    	doRockRecipes(blockChert);
     	addStoneType(RockType.METAMORPHIC,"slate",1.5,10,0,true,true);
     	addStoneType(RockType.METAMORPHIC,"schist",3,15,1,true,false);
     	addStoneType(RockType.METAMORPHIC,"gneiss",3,15,1,true,false);
