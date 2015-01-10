@@ -31,8 +31,8 @@ public class NoiseLayer2D {
     public float getValueAt(double x, double y){
     	x *= multiplier;
     	y *= multiplier;
-    	int gridX = (int)(x);
-    	int gridY = (int)(y);
+    	int gridX = CubicInterpolator.floor(x);
+    	int gridY = CubicInterpolator.floor(y);
     	float[][] local16 = new float[4][4];
     	for(int dx = 0; dx < 4; dx++){
     		for(int dy = 0; dy < 4; dy++){
@@ -56,4 +56,6 @@ public class NoiseLayer2D {
     	return l;
     }
 
+    
+    
 }

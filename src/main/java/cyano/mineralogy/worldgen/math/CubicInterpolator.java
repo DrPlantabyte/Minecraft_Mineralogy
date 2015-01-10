@@ -109,8 +109,8 @@ public abstract class CubicInterpolator {
 	 * @return A cubic-interpolated value from the given control points.
 	 */
 	public static float interpolate1d(double x, float yn2, float yn1, float yp1, float yp2){
-		float w = (float)(x - Math.floor(x));
-		if(w == 0 && x != 0) return yp1; // w should be 1, but the way this is calcluated it doesn't work right
+		float w = (float)(x - floor(x));
+		if(w == 0 && x != 0) return yn1; // w should be 1, but the way this is calcluated it doesn't work right
 		// prevent precision-loss artifacts
 		if(w < 0.0001){
 			return yn1;
@@ -160,7 +160,13 @@ public abstract class CubicInterpolator {
 	}
 	
 	
-
+	public static int floor(double x){
+    	if(x >= 0.0){
+    		return (int)x;
+    	} else {
+    		return ((int)x) - 1;
+    	}
+    }
 	
 
 }
