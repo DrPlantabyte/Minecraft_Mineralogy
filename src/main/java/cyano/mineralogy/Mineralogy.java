@@ -39,7 +39,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "2.2.2";
+    public static final String VERSION = "2.2.3";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -93,17 +93,17 @@ public class Mineralogy
    "Changing this value will change the 'waviness' of the layers.");
     	
     	// Blocks, Items, World-gen
-    	addStoneType(RockType.IGNEOUS,"andesite",1.5,10,0,false,true,true,false);
-    	addStoneType(RockType.IGNEOUS,"basalt",5,100,2,false,true,true,false);
-    	addStoneType(RockType.IGNEOUS,"diorite",1.5,10,0,false,true,true,false);
-    	addStoneType(RockType.IGNEOUS,"granite",3,15,1,false,true,true,false);
-    	addStoneType(RockType.IGNEOUS,"pumice",0.75,1,0,false,true,true,false);
-    	addStoneType(RockType.IGNEOUS,"rhyolite",1.5,10,0,false,true,true,false);
-    	addStoneType(RockType.IGNEOUS,"pegmatite",1.5,10,0,false,true,true,false);
-    	addStoneType(RockType.SEDIMENTARY,"shale",1.5,10,0,true,false,true,true);
-    	addStoneType(RockType.SEDIMENTARY,"conglomerate",1.5,10,0,false,true,true,false);
-    	addStoneType(RockType.SEDIMENTARY,"dolomite",3,15,1,false,true,true,false);
-    	addStoneType(RockType.SEDIMENTARY,"limestone",1.5,10,0,false,true,true,true);
+    	addStoneType(RockType.IGNEOUS,"andesite",1.5,10,0,true,false);
+    	addStoneType(RockType.IGNEOUS,"basalt",5,100,2,true,false);
+    	addStoneType(RockType.IGNEOUS,"diorite",1.5,10,0,true,false);
+    	addStoneType(RockType.IGNEOUS,"granite",3,15,1,true,false);
+    	addStoneType(RockType.IGNEOUS,"pumice",0.75,1,0,true,false);
+    	addStoneType(RockType.IGNEOUS,"rhyolite",1.5,10,0,true,false);
+    	addStoneType(RockType.IGNEOUS,"pegmatite",1.5,10,0,true,false);
+    	addStoneType(RockType.SEDIMENTARY,"shale",1.5,10,0,true,true);
+    	addStoneType(RockType.SEDIMENTARY,"conglomerate",1.5,10,0,true,false);
+    	addStoneType(RockType.SEDIMENTARY,"dolomite",3,15,1,true,false);
+    	addStoneType(RockType.SEDIMENTARY,"limestone",1.5,10,0,true,true);
     	sedimentaryStones.add(Blocks.sandstone);
     	blockGypsum = new Gypsum();
     	GameRegistry.registerBlock(blockGypsum, "gypsum");
@@ -112,9 +112,9 @@ public class Mineralogy
     	GameRegistry.registerBlock(blockChert,"chert");
     	mineralogyBlockRegistry.put("chert", blockChert);
     	sedimentaryStones.add(blockChert);
-    	addStoneType(RockType.METAMORPHIC,"slate",1.5,10,0,true,false,true,true);
-    	addStoneType(RockType.METAMORPHIC,"schist",3,15,1,false,true,true,false);
-    	addStoneType(RockType.METAMORPHIC,"gneiss",3,15,1,false,true,true,false);
+    	addStoneType(RockType.METAMORPHIC,"slate",1.5,10,0,true,true);
+    	addStoneType(RockType.METAMORPHIC,"schist",3,15,1,true,false);
+    	addStoneType(RockType.METAMORPHIC,"gneiss",3,15,1,true,false);
     	
     	// add items
     	gypsumPowder = new GypsumDust();
@@ -286,8 +286,8 @@ public class Mineralogy
      * @param hasSmooth if true, then XXX_smooth exists
      * @param hasBricks if true, then XXX_brick exists
      */
-    private static void addStoneType(RockType type, String name,double hardness,double blastResistance,int toolHardnessLevel, boolean isStoneEquivalent, boolean isCobblestoneEquivalent, boolean hasSmooth, boolean hasBricks){
-    	Block b = new Rock(isStoneEquivalent,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+    private static void addStoneType(RockType type, String name,double hardness,double blastResistance,int toolHardnessLevel, boolean hasSmooth, boolean hasBricks){
+    	Block b = new Rock(true,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
     	b.setUnlocalizedName(Mineralogy.MODID +"_"+ name);
     	b.setCreativeTab(CreativeTabs.tabBlock);
     	GameRegistry.registerBlock(b, name); // MUST REGISTER BLOCK WITH GAME BEFORE DOING ANYTHING ELSE WITH IT!!!
@@ -316,13 +316,10 @@ public class Mineralogy
 		recipeInputs.add(new ItemStack(b));
     	GameRegistry.addRecipe(new net.minecraft.item.crafting.ShapelessRecipes(new ItemStack(Blocks.cobblestone,4), recipeInputs));
     	
-    	if(isStoneEquivalent){
-    		OreDictionary.registerOre("stone", b);
-    	}
-    	if(isCobblestoneEquivalent){
-    		OreDictionary.registerOre("cobblestone", b);
-    		GameRegistry.addSmelting(b, new ItemStack(Blocks.stone,1), 0.1f);
-    	}
+    	
+		OreDictionary.registerOre("cobblestone", b);
+		GameRegistry.addSmelting(b, new ItemStack(Blocks.stone,1), 0.1f);
+    	
     	if(hasSmooth){
     		String smoothName = name + "_smooth";
     		Block b2 = new Rock(false,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
