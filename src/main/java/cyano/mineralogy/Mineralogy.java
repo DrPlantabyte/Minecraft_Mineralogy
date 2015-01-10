@@ -50,7 +50,7 @@ public class Mineralogy
     public static final Map<String,Block> mineralogyBlockRegistry = new HashMap<String,Block>();
     
     /** size of rock layers */
-    public static double ROCK_LAYER_SIZE = 32; 
+    public static double ROCK_LAYER_NOISE = 32; 
     /** size of mineral biomes */
     public static int GEOME_SIZE = 100; 
 
@@ -85,6 +85,12 @@ public class Mineralogy
     	// load config
     	Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     	config.load();
+
+    	GEOME_SIZE = config.getInt("GEOME_SIZE", "world-gen", GEOME_SIZE, 4, Short.MAX_VALUE, 
+   "Making this value larger increases the size of regions of igneous, \n"
+ + "sedimentary, and metamorphic rocks");
+    	ROCK_LAYER_NOISE = (double)config.getFloat("ROCK_LAYER_NOISE", "world-gen", (float)ROCK_LAYER_NOISE, 1.0f, (float)Short.MAX_VALUE, 
+   "Changing this value will change the 'waviness' of the layers.");
     	
     	// Blocks, Items, World-gen
     	addStoneType(RockType.IGNEOUS,"andesite",1.5,10,0,false,true,true,false);

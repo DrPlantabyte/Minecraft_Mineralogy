@@ -1,5 +1,7 @@
 package cyano.mineralogy.blocks;
 
+import java.lang.reflect.Method;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -17,11 +19,8 @@ public class Rock extends net.minecraft.block.Block{
 		super(Material.rock);
 		this.isStoneEquivalent = isStoneEquivalent;
 		super.setHardness((float)hardness); // dirt is 0.5, grass is 0.6, stone is 1.5,iron ore is 3, obsidian is 50
-		//this.blockHardness = hardness;
 		super.setResistance((float)blastResistance); // dirt is 0, iron ore is 5, stone is 10, obsidian is 2000
-		//this.blockResistance = blastResistance;
 		super.setStepSound(Block.soundTypePiston); // sound for stone
-		//this.stepSound = Block.soundTypePiston;
 		super.setHarvestLevel("pickaxe", toolHardnessLevel);
 	}
 	

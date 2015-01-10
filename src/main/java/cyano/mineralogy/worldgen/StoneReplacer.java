@@ -24,7 +24,7 @@ public class StoneReplacer implements IWorldGenerator {
 			glock.lock();
 			try{
 				if(geom == null){
-					geom = new Geology(w.getSeed(),Mineralogy.GEOME_SIZE,Mineralogy.ROCK_LAYER_SIZE);
+					geom = new Geology(w.getSeed(),Mineralogy.GEOME_SIZE,Mineralogy.ROCK_LAYER_NOISE);
 				}
 			}finally{
 				glock.unlock();

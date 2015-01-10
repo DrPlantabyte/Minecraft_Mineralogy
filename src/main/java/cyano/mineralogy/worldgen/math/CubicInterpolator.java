@@ -36,10 +36,10 @@ public abstract class CubicInterpolator {
 		double w = x - Math.floor(x);
 		if(w == 0 && x != 0) return yp1; // w should be 1, but the way this is calcluated it doesn't work right
 		// prevent precision-loss artifacts
-		if(w < 0.00000001){
+		if(w < 0.000976563){
 			return yn1;
 		}
-		if(w > 0.9999999) {
+		if(w > 0.999023438) {
 			return yp1;
 		}
 		// adapted from http://www.paulinternet.nl/?page=bicubic
