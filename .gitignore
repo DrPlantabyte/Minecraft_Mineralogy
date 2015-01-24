@@ -5,5 +5,9 @@
 /gradlew.bat
 /bin/*
 /.gradle/*
+/eclipse/.metadata/.plugins/org.eclipse.core.resources/.history/*
+/eclipse/.metadata/*.dat
+/eclipse/.metadata/*.tree
+/eclipse/.metadata/*.index
 *.index
 *~
