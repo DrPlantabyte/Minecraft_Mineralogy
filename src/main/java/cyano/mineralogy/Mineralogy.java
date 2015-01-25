@@ -39,7 +39,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "2.2.4";
+    public static final String VERSION = "2.3.0";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -320,6 +320,20 @@ public class Mineralogy
         	GameRegistry.registerBlock(b2, smoothName); // MUST REGISTER BLOCK WITH GAME BEFORE DOING ANYTHING ELSE WITH IT!!!
         	GameRegistry.addRecipe(new ItemStack(b2,4), "xx","xx",'x',new ItemStack(b));
         	mineralogyBlockRegistry.put(smoothName, b2);
+        	
+        	// smoothable blocks have stair versions
+        	Block stair = new RockStairs(b,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+        	String stairName = name+"_stairs";
+        	stair.setUnlocalizedName(Mineralogy.MODID +"_"+ stairName);
+        	GameRegistry.registerBlock(stair, stairName);
+        	GameRegistry.addRecipe(new ItemStack(stair,4), "x  ","xx ", "xxx",'x',new ItemStack(b));
+        	mineralogyBlockRegistry.put(stairName, stair);
+        	Block smoothStair = new RockStairs(b,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+        	String smoothStairName = smoothName+"_stairs";
+        	smoothStair.setUnlocalizedName(Mineralogy.MODID +"_"+ smoothStairName);
+        	GameRegistry.registerBlock(smoothStair, smoothStairName);
+        	GameRegistry.addRecipe(new ItemStack(smoothStair,4), "x  ","xx ", "xxx",'x',new ItemStack(b2));
+        	mineralogyBlockRegistry.put(smoothStairName, smoothStair);
 
         	if(hasBricks){
         		String brickName = name + "_brick";
@@ -329,6 +343,14 @@ public class Mineralogy
             	GameRegistry.registerBlock(b3, brickName); // MUST REGISTER BLOCK WITH GAME BEFORE DOING ANYTHING ELSE WITH IT!!!
             	GameRegistry.addRecipe(new ItemStack(b3,4), "xx","xx",'x',new ItemStack(b2));
             	mineralogyBlockRegistry.put(brickName, b3);
+            	
+            	// stairs
+            	Block brickStair = new RockStairs(b,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+            	String brickStairName = brickName+"_stairs";
+            	brickStair.setUnlocalizedName(Mineralogy.MODID +"_"+ brickStairName);
+            	GameRegistry.registerBlock(brickStair, brickStairName);
+            	GameRegistry.addRecipe(new ItemStack(brickStair,4), "x  ","xx ", "xxx",'x',new ItemStack(b3));
+            	mineralogyBlockRegistry.put(brickStairName, brickStair);
         	}
     	}
     }

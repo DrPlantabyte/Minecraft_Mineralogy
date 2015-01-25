@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "mineralogy:blocks/granite_smooth",
+        "top": "mineralogy:blocks/granite_smooth",
+        "side": "mineralogy:blocks/granite_smooth"
+    }
+}

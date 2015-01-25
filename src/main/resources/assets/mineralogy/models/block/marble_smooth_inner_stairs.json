@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "mineralogy:blocks/marble_smooth",
+        "top": "mineralogy:blocks/marble_smooth",
+        "side": "mineralogy:blocks/marble_smooth"
+    }
+}
