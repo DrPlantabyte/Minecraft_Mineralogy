@@ -28,6 +28,6 @@ public class Chert extends Rock{
     }
 	@Override public int quantityDropped(Random prng)
     {
-        return prng.nextInt(4)|1;
+        return 1;
     }
 }

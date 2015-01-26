@@ -11,6 +11,7 @@ import java.util.Set;
 
 import scala.actors.threadpool.Arrays;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -327,13 +328,32 @@ public class Mineralogy
         	stair.setUnlocalizedName(Mineralogy.MODID +"_"+ stairName);
         	GameRegistry.registerBlock(stair, stairName);
         	GameRegistry.addRecipe(new ItemStack(stair,4), "x  ","xx ", "xxx",'x',new ItemStack(b));
+        	OreDictionary.registerOre("stairCobblestone", stair);
         	mineralogyBlockRegistry.put(stairName, stair);
         	Block smoothStair = new RockStairs(b,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
         	String smoothStairName = smoothName+"_stairs";
         	smoothStair.setUnlocalizedName(Mineralogy.MODID +"_"+ smoothStairName);
         	GameRegistry.registerBlock(smoothStair, smoothStairName);
         	GameRegistry.addRecipe(new ItemStack(smoothStair,4), "x  ","xx ", "xxx",'x',new ItemStack(b2));
+        	OreDictionary.registerOre("stairCobblestone", stair);
         	mineralogyBlockRegistry.put(smoothStairName, smoothStair);
+        	
+        	// smoothable blocks have slab versions
+        	Block slab = new RockSlab(Material.rock,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+        	String slabName = name+"_slab";
+        	slab.setUnlocalizedName(Mineralogy.MODID +"_"+ slabName);
+        	GameRegistry.registerBlock(slab, slabName);
+        	GameRegistry.addRecipe(new ItemStack(slab,6), "xxx",'x',new ItemStack(b));
+        	OreDictionary.registerOre("slabCobblestone", slab);
+        	mineralogyBlockRegistry.put(slabName, slab);
+        	Block slab2 = new RockSlab(Material.rock,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+        	String slabName2 = smoothName+"_slab";
+        	slab2.setUnlocalizedName(Mineralogy.MODID +"_"+ slabName2);
+        	GameRegistry.registerBlock(slab2, slabName2);
+        	GameRegistry.addRecipe(new ItemStack(slab2,6), "xxx",'x',new ItemStack(b2));
+        	OreDictionary.registerOre("slabCobblestone", slab2);
+        	mineralogyBlockRegistry.put(slabName2, slab2);
+        	
 
         	if(hasBricks){
         		String brickName = name + "_brick";
@@ -350,7 +370,18 @@ public class Mineralogy
             	brickStair.setUnlocalizedName(Mineralogy.MODID +"_"+ brickStairName);
             	GameRegistry.registerBlock(brickStair, brickStairName);
             	GameRegistry.addRecipe(new ItemStack(brickStair,4), "x  ","xx ", "xxx",'x',new ItemStack(b3));
+            	OreDictionary.registerOre("stairStonebrick", slab2);
             	mineralogyBlockRegistry.put(brickStairName, brickStair);
+            	
+            	// slab
+            	Block slab3 = new RockSlab(Material.rock,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+            	String slabName3 = brickName+"_slab";
+            	slab3.setUnlocalizedName(Mineralogy.MODID +"_"+ slabName3);
+            	GameRegistry.registerBlock(slab3, slabName3);
+            	GameRegistry.addRecipe(new ItemStack(slab3,6), "xxx",'x',new ItemStack(b3));
+            	OreDictionary.registerOre("slabStonebrick", slab3);
+            	mineralogyBlockRegistry.put(slabName3, slab3);
+            	
         	}
     	}
     }
