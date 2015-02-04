@@ -34,12 +34,14 @@ public class Rock extends net.minecraft.block.Block{
      */
     @Override public boolean isReplaceableOreGen(World world, BlockPos coord, Predicate<IBlockState> predicate)
     {
-        return Blocks.stone.isReplaceableOreGen(world, coord, predicate);
+        return true;
     }
-    
+    /**
+     * Determines if the current block is replaceable by Ore veins during world generation.
+     */
     @Override public boolean isReplaceable(World world, BlockPos coord)
     {
-        return Blocks.stone.isReplaceable(world, coord);
+        return true;
     }
     
     

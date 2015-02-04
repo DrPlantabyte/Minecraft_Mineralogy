@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import scala.actors.threadpool.Arrays;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -40,7 +39,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "2.3.0";
+    public static final String VERSION = "2.3.1";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
