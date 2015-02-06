@@ -94,6 +94,7 @@ tile.mineralogy_slate_slab.name=板岩板
 tile.mineralogy_slate_smooth_slab.name=磨制板岩板
 tile.mineralogy_slate_brick_slab.name=板岩砖块板
 
+tile.mineralogy_saprolite.name=腐泥土
 tile.mineralogy_gypsum.name=石膏
 tile.mineralogy_chert.name=黑硅石
 tile.mineralogy_drywall_black.name=黑色干式墙

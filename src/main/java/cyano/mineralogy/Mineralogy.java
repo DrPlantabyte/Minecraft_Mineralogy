@@ -39,7 +39,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "2.3.1";
+    public static final String VERSION = "2.4.0";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -57,8 +57,10 @@ public class Mineralogy
  //   public static OrePlacer orePlacementGenerator = null;
 
     public static Block blockChert;
-    
+
     public static Block blockGypsum;
+    
+    public static Block blockSaprolite;
     
     public static Item gypsumPowder;
     
@@ -108,11 +110,16 @@ public class Mineralogy
     	blockGypsum = new Gypsum();
     	GameRegistry.registerBlock(blockGypsum, "gypsum");
     	mineralogyBlockRegistry.put("gypsum", blockGypsum);
+    	sedimentaryStones.add(blockGypsum);
     	blockChert = new Chert();
     	GameRegistry.registerBlock(blockChert,"chert");
     	mineralogyBlockRegistry.put("chert", blockChert);
     	sedimentaryStones.add(blockChert);
     	doRockRecipes(blockChert);
+    	blockSaprolite = new Soil(MODID+"_saprolite");
+    	GameRegistry.registerBlock(blockSaprolite,"saprolite");
+    	mineralogyBlockRegistry.put("saprolite", blockSaprolite);
+    	sedimentaryStones.add(blockSaprolite);
     	addStoneType(RockType.METAMORPHIC,"slate",1.5,10,0,true,true);
     	addStoneType(RockType.METAMORPHIC,"schist",3,15,1,true,false);
     	addStoneType(RockType.METAMORPHIC,"gneiss",3,15,1,true,false);

@@ -83,6 +83,7 @@ tile.mineralogy_slate_stairs.name=Escaleras Pizarra
 tile.mineralogy_slate_smooth_stairs.name=Escaleras Pizarra Pulido
 tile.mineralogy_slate_brick_stairs.name=Escaleras Ladrillos Pizarra
 
+tile.mineralogy_saprolite.name=Saprolite
 tile.mineralogy_andesite_slab.name=Media Cuadra Escaleras Andesita
 tile.mineralogy_andesite_smooth_slab.name=Media Cuadra Escaleras Andesita Pulido
 tile.mineralogy_basalt_slab.name=Media Cuadra Escaleras Basalto
