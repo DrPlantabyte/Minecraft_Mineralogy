@@ -30,12 +30,5 @@ public class Soil extends Block{
     {
         return true;
     }
-    /**
-     * Determines if the current block is replaceable by Ore veins during world generation.
-     */
-    @Override public boolean isReplaceable(World world, BlockPos coord)
-    {
-        return true;
-    }
 	
 }
