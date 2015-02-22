@@ -18,6 +18,7 @@ public class RockStairs extends net.minecraft.block.BlockStairs{
 		this.setStepSound(sound); // sound for stone
 		this.setHarvestLevel("pickaxe", toolHardnessLevel);
 		this.setCreativeTab(CreativeTabs.tabDecorations);
+		this.useNeighborBrightness = true;
 	}
 
 }

@@ -17,12 +17,12 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "2.4.0"
+version = "2.4.1"
 group= "cyano.mineralogy" 
 archivesBaseName = "mineralogy"
 
 minecraft {
-    version = "1.8-11.14.0.1281-1.8"
+    version = "1.8-11.14.0.1299"
     runDir = "eclipse"
     
     // the mappings can be changed at any time, and must be in the following format.

@@ -37,6 +37,7 @@ public class RockSlab extends net.minecraft.block.Block{
 		this.setCreativeTab(CreativeTabs.tabDecorations);
 		this.setDefaultState(this.blockState.getBaseState()
 	    		.withProperty(POSITION, SlabType.BOTTOM));
+		this.useNeighborBrightness = true;
 	}
 	
 	@Override
