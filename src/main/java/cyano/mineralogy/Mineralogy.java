@@ -3,6 +3,7 @@ package cyano.mineralogy;
 // DON'T FORGET TO UPDATE mcmod.info FILE!!!
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.*;
 import cyano.mineralogy.blocks.*;
@@ -82,7 +84,14 @@ public class Mineralogy
 	// add other blocks and recipes
 	private static final String[] colorSuffixes = {"black","red","green","brown","blue","purple","cyan",
 			"silver","gray","pink","lime","yellow","light_blue","magenta","orange","white"};
-    
+
+	private List<String> igneousWhitelist = new ArrayList<String>();
+	private List<String> igneousBlacklist = new ArrayList<String>();
+	private List<String> sedimentaryWhitelist = new ArrayList<String>();
+	private List<String> sedimentaryBlacklist  = new ArrayList<String>();
+	private List<String> metamorphicWhitelist = new ArrayList<String>();
+	private List<String> metamorphicBlacklist  = new ArrayList<String>();
+	
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -111,8 +120,6 @@ public class Mineralogy
     	addStoneType(RockType.SEDIMENTARY,"dolomite",3,15,1,true,false);
     	addStoneType(RockType.SEDIMENTARY,"limestone",1.5,10,0,true,true);
     	sedimentaryStones.add(Blocks.sandstone);
-    	mineralogyBlockRegistry.put("gypsum", blockGypsum);
-    	sedimentaryStones.add(blockGypsum);
     	blockChert = new Chert();
     	GameRegistry.registerBlock(blockChert,"chert");
     	mineralogyBlockRegistry.put("chert", blockChert);
@@ -161,13 +168,19 @@ public class Mineralogy
     			config.getInt("nitrate_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
     			config.getFloat("nitrate_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
     			config.getInt("nitrate_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
-    	addOre(blockGypsum, 
+    	addOre(blockGypsum, "gypsum",
     			config.getInt("gypsum.minY", "Mineralogy Ores", 32, 1, 255, "Minimum ore spawn height"),
-    			config.getInt("gypsum.maxY", "Mineralogy Ores", 224, 1, 255, "Maximum ore spawn height"),
-    			config.getFloat("gypsum.frequency", "Mineralogy Ores", 0.0625f, 0, 63, "Number of ore deposits per chunk"),
+    			config.getInt("gypsum.maxY", "Mineralogy Ores", 128, 1, 255, "Maximum ore spawn height"),
+    			config.getFloat("gypsum.frequency", "Mineralogy Ores", 0.125f, 0, 63, "Number of ore deposits per chunk"),
     			config.getInt("gypsum.quantity", "Mineralogy Ores", 100, 0, 63, "Size of ore deposit"));
     	
+    	igneousBlacklist.addAll(asList(config.getString("igneous_blacklist", "world-gen", "", "Ban blocks from spawning in rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
+    	sedimentaryBlacklist.addAll(asList(config.getString("sedimentary_blacklist", "world-gen", "", "Ban blocks from spawning in rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
+    	metamorphicBlacklist.addAll(asList(config.getString("metamorphic_blacklist", "world-gen", "", "Ban blocks from spawning in rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
     	
+    	igneousWhitelist.addAll(asList(config.getString("igneous_whitelist", "world-gen", "", "Adds blocks to rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
+    	sedimentaryWhitelist.addAll(asList(config.getString("sedimentary_whitelist", "world-gen", "", "Adds blocks to rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
+    	metamorphicWhitelist.addAll(asList(config.getString("metamorphic_whitelist", "world-gen", "", "Adds blocks to rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
     	
     	
     	for(int i = 0; i < 16; i++){
@@ -203,6 +216,11 @@ public class Mineralogy
     	GameRegistry.addSmelting(Blocks.gravel, new ItemStack(Blocks.stone), 0f);
     	
     	config.save();
+    }
+    
+    private static List<String> asList(String list, String delimiter){
+    	String[] a = list.split(delimiter);
+    	return Arrays.asList(a);
     }
     
     @EventHandler
@@ -264,6 +282,38 @@ public class Mineralogy
     	
 		// addons to other mods
     	
+    	// process black-lists and white-lists
+    	for(String id : igneousWhitelist){
+    		Block b = getBlock(id);
+    		if(b == null) continue;
+    		igneousStones.add(b);
+    	}
+    	for(String id : metamorphicWhitelist){
+    		Block b = getBlock(id);
+    		if(b == null) continue;
+    		metamorphicStones.add(b);
+    	}
+    	for(String id : sedimentaryWhitelist){
+    		Block b = getBlock(id);
+    		if(b == null) continue;
+    		sedimentaryStones.add(b);
+    	}
+    	for(String id : igneousBlacklist){
+    		Block b = getBlock(id);
+    		if(b == null) continue;
+    		igneousStones.remove(b);
+    	}
+    	for(String id : metamorphicBlacklist){
+    		Block b = getBlock(id);
+    		if(b == null) continue;
+    		metamorphicStones.remove(b);
+    	}
+    	for(String id : sedimentaryBlacklist){
+    		Block b = getBlock(id);
+    		if(b == null) continue;
+    		sedimentaryStones.remove(b);
+    	}
+    	
     	
     	/*
     	System.out.println("Ore Dictionary Registry:");
@@ -278,6 +328,10 @@ public class Mineralogy
     }
     
 
+    private static Block getBlock(String id){
+    	return GameData.getBlockRegistry().getObject(id.trim());
+    }
+    
     private static int oreWeightCount = 20;
     
     private static void addOre(String oreName, String oreDictionaryName, Item oreDropItem, int numMin, int numMax, int pickLevel,
@@ -291,9 +345,9 @@ public class Mineralogy
     	
     }
     
-    private static void addOre(Block oreBlock,
+    private static void addOre(Block oreBlock, String regName,
     		int minY, int maxY, float spawnFrequency, int spawnQuantity){
-    	mineralogyBlockRegistry.put(oreBlock.getUnlocalizedName(), oreBlock);
+    	mineralogyBlockRegistry.put(regName, oreBlock);
     	GameRegistry.registerWorldGenerator(new OreSpawner(oreBlock,minY,maxY,spawnFrequency,spawnQuantity, (oreWeightCount * 25214903917L)+11L), oreWeightCount++);
     	
     }
