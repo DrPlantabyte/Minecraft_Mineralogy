@@ -144,6 +144,7 @@ public class RockSlab extends net.minecraft.block.Block{
     public boolean onBlockActivated(final World w, final BlockPos coord, final IBlockState bs, 
     		final EntityPlayer player, final EnumFacing facing, final float f1, final float f2, 
     		final float f3) {
+    	if(player.getCurrentEquippedItem() == null) return false;
         if(player.isSneaking() == false 
         		&& bs.getBlock() ==  Block.getBlockFromItem(player.getCurrentEquippedItem().getItem())){
         	// turn into double-slab
