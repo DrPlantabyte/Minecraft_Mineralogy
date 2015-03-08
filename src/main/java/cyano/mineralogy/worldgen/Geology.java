@@ -147,7 +147,7 @@ public class Geology {
 	 * @return
 	 */
 	private Block pickBlockFromList(int value, List<Block> list){
-		return list.get(whiteNoiseArray[(value >> 3) & 0xFF] % list.size());
+		return list.get(whiteNoiseArray[(value / Mineralogy.GEOM_LAYER_THICKNESS) & 0xFF] % list.size());
 	}
 	
 	

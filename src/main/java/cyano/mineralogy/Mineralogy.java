@@ -39,7 +39,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "2.4.2";
+    public static final String VERSION = "2.5.0";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -53,7 +53,9 @@ public class Mineralogy
     public static double ROCK_LAYER_NOISE = 32; 
     /** size of mineral biomes */
     public static int GEOME_SIZE = 100; 
-
+    /** thickness of rock layers */
+    public static int GEOM_LAYER_THICKNESS = 8;
+    
  //   public static OrePlacer orePlacementGenerator = null;
 
     public static Block blockChert;
@@ -93,6 +95,8 @@ public class Mineralogy
  + "sedimentary, and metamorphic rocks");
     	ROCK_LAYER_NOISE = (double)config.getFloat("ROCK_LAYER_NOISE", "world-gen", (float)ROCK_LAYER_NOISE, 1.0f, (float)Short.MAX_VALUE, 
    "Changing this value will change the 'waviness' of the layers.");
+    	GEOM_LAYER_THICKNESS = config.getInt("ROCK_LAYER_THICKNESS", "world-gen",GEOM_LAYER_THICKNESS, 1, 255, 
+   "Changing this value will change the height of individual layers.");
     	
     	// Blocks, Items, World-gen
     	addStoneType(RockType.IGNEOUS,"andesite",1.5,10,0,true,false);
@@ -107,8 +111,6 @@ public class Mineralogy
     	addStoneType(RockType.SEDIMENTARY,"dolomite",3,15,1,true,false);
     	addStoneType(RockType.SEDIMENTARY,"limestone",1.5,10,0,true,true);
     	sedimentaryStones.add(Blocks.sandstone);
-    	blockGypsum = new Gypsum();
-    	GameRegistry.registerBlock(blockGypsum, "gypsum");
     	mineralogyBlockRegistry.put("gypsum", blockGypsum);
     	sedimentaryStones.add(blockGypsum);
     	blockChert = new Chert();
@@ -125,6 +127,8 @@ public class Mineralogy
     	addStoneType(RockType.METAMORPHIC,"gneiss",3,15,1,true,false);
     	
     	// add items
+    	blockGypsum = new Gypsum();
+    	GameRegistry.registerBlock(blockGypsum, "gypsum");
     	gypsumPowder = new GypsumDust();
     	GameRegistry.registerItem(gypsumPowder, GypsumDust.itemName);
     	OreDictionary.registerOre(GypsumDust.dictionaryName, gypsumPowder);
@@ -141,23 +145,27 @@ public class Mineralogy
     	GameRegistry.registerItem(mineralFertilizer, MineralFertilizer.itemName);
     	OreDictionary.registerOre(MineralFertilizer.dictionaryName, mineralFertilizer);
     	
-    	
     	// register ores
     	addOre("sulfur_ore","oreSulfur",sulphurPowder,1,4,0, 
     			config.getInt("sulphur_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
     			config.getInt("sulphur_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
-    			config.getInt("sulphur_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
+    			config.getFloat("sulphur_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
     			config.getInt("sulphur_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
     	addOre("phosphorous_ore","orePhosphorous",phosphorousPowder,1,4,0, 
     			config.getInt("phosphorous_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
     			config.getInt("phosphorous_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
-    			config.getInt("phosphorous_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
+    			config.getFloat("phosphorous_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
     			config.getInt("phosphorous_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
     	addOre("nitrate_ore","oreNitrate",nitratePowder,1,4,0, 
     			config.getInt("nitrate_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
     			config.getInt("nitrate_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
-    			config.getInt("nitrate_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
+    			config.getFloat("nitrate_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
     			config.getInt("nitrate_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
+    	addOre(blockGypsum, 
+    			config.getInt("gypsum.minY", "Mineralogy Ores", 32, 1, 255, "Minimum ore spawn height"),
+    			config.getInt("gypsum.maxY", "Mineralogy Ores", 224, 1, 255, "Maximum ore spawn height"),
+    			config.getFloat("gypsum.frequency", "Mineralogy Ores", 0.0625f, 0, 63, "Number of ore deposits per chunk"),
+    			config.getInt("gypsum.quantity", "Mineralogy Ores", 100, 0, 63, "Size of ore deposit"));
     	
     	
     	
@@ -273,12 +281,19 @@ public class Mineralogy
     private static int oreWeightCount = 20;
     
     private static void addOre(String oreName, String oreDictionaryName, Item oreDropItem, int numMin, int numMax, int pickLevel,
-    		int minY, int maxY, int spawnFrequency, int spawnQuantity){
+    		int minY, int maxY, float spawnFrequency, int spawnQuantity){
     	String oreBlockName = Mineralogy.MODID+"_"+oreName;
     	Block oreBlock = new Ore(oreName,oreDropItem,numMin,numMax,pickLevel);
     	GameRegistry.registerBlock(oreBlock, oreName); // MUST REGISTER BLOCK WITH GAME BEFORE DOING ANYTHING ELSE WITH IT!!!
     	mineralogyBlockRegistry.put(oreName, oreBlock);
     	OreDictionary.registerOre(oreDictionaryName, oreBlock);
+    	GameRegistry.registerWorldGenerator(new OreSpawner(oreBlock,minY,maxY,spawnFrequency,spawnQuantity, (oreWeightCount * 25214903917L)+11L), oreWeightCount++);
+    	
+    }
+    
+    private static void addOre(Block oreBlock,
+    		int minY, int maxY, float spawnFrequency, int spawnQuantity){
+    	mineralogyBlockRegistry.put(oreBlock.getUnlocalizedName(), oreBlock);
     	GameRegistry.registerWorldGenerator(new OreSpawner(oreBlock,minY,maxY,spawnFrequency,spawnQuantity, (oreWeightCount * 25214903917L)+11L), oreWeightCount++);
     	
     }
