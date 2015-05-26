@@ -41,7 +41,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "2.5.0";
+    public static final String VERSION = "2.5.1";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -57,6 +57,8 @@ public class Mineralogy
     public static int GEOME_SIZE = 100; 
     /** thickness of rock layers */
     public static int GEOM_LAYER_THICKNESS = 8;
+    
+    public static boolean SMETLABLE_GRAVEL = true;
     
  //   public static OrePlacer orePlacementGenerator = null;
 
@@ -99,6 +101,8 @@ public class Mineralogy
     	Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     	config.load();
 
+    	SMETLABLE_GRAVEL = config.getBoolean("SMETLABLE_GRAVEL", "options", SMETLABLE_GRAVEL, 
+   "If true, then gravel can be smelted into generic stone");
     	GEOME_SIZE = config.getInt("GEOME_SIZE", "world-gen", GEOME_SIZE, 4, Short.MAX_VALUE, 
    "Making this value larger increases the size of regions of igneous, \n"
  + "sedimentary, and metamorphic rocks");
@@ -213,7 +217,9 @@ public class Mineralogy
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,4),Items.sugar,NitrateDust.dictionaryName,SulfurDust.dictionaryName));
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(mineralFertilizer,1),NitrateDust.dictionaryName,PhosphoriteDust.dictionaryName));
     	
-    	GameRegistry.addSmelting(Blocks.gravel, new ItemStack(Blocks.stone), 0f);
+    	if(SMETLABLE_GRAVEL){
+    		GameRegistry.addSmelting(Blocks.gravel, new ItemStack(Blocks.stone), 0.1f);
+    	}
     	
     	config.save();
     }
