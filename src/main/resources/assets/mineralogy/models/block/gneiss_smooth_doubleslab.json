@@ -1,0 +1,8 @@
+{
+    "parent": "mineralogy:block/slab_double",
+    "textures": {
+        "bottom": "mineralogy:blocks/gneiss_smooth",
+        "top": "mineralogy:blocks/gneiss_smooth",
+        "side": "mineralogy:blocks/gneiss_smooth"
+    }
+}

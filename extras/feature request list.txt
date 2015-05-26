@@ -1,0 +1,18 @@
+Feature Requests
+Now:
+- Screenshots
++ gravel smelting
++ remove metatest block
++ language translations
+
+Later:
++ access to world gen parameters
+- half-slabs and stairs
+- better textures
+- better looking drywall
+- rock-matching ore
+
+
+Much later
+- fossils
+

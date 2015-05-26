@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "mineralogy:blocks/conglomerate",
+        "top": "mineralogy:blocks/conglomerate",
+        "side": "mineralogy:blocks/conglomerate"
+    }
+}

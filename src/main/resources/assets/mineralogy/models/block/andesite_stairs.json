@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "mineralogy:blocks/andesite",
+        "top": "mineralogy:blocks/andesite",
+        "side": "mineralogy:blocks/andesite"
+    }
+}
