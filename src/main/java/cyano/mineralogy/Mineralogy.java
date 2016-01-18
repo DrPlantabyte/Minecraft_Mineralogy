@@ -53,7 +53,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "2.6.0";
+    public static final String VERSION = "2.6.1";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -405,6 +405,7 @@ public class Mineralogy
     	}
     	
     	doRockRecipes(b);
+    	OreDictionary.registerOre("stone", b);
     	
     	if(hasSmooth){
     		String smoothName = name + "_smooth";
