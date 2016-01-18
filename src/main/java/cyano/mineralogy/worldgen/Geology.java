@@ -89,7 +89,7 @@ public class Geology {
 				int z = zOffset | dz;
 				int height = 255;//chunk.getHeight(dx, dz);
 				int indexBase = (dx * 16 + dz) * height;
-				int y = chunk.getHeight(dx, dz);//height-1;
+				int y = chunk.getHeight(new BlockPos(dx, 1, dz));//height-1;
 				while(y > 0 && world.isAirBlock(new BlockPos(x, y, z))){
 					y--;
 				}

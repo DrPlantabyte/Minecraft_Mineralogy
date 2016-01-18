@@ -7,9 +7,22 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
+import cyano.mineralogy.blocks.Chert;
+import cyano.mineralogy.blocks.DryWall;
+import cyano.mineralogy.blocks.Gypsum;
+import cyano.mineralogy.blocks.Ore;
+import cyano.mineralogy.blocks.Rock;
+import cyano.mineralogy.blocks.RockSlab;
+import cyano.mineralogy.blocks.RockStairs;
+import cyano.mineralogy.blocks.Soil;
+import cyano.mineralogy.items.GypsumDust;
+import cyano.mineralogy.items.MineralFertilizer;
+import cyano.mineralogy.items.NitrateDust;
+import cyano.mineralogy.items.PhosphoriteDust;
+import cyano.mineralogy.items.SulfurDust;
+import cyano.mineralogy.worldgen.OreSpawner;
+import cyano.mineralogy.worldgen.StoneReplacer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -19,7 +32,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -28,10 +41,9 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.*;
-import cyano.mineralogy.blocks.*;
-import cyano.mineralogy.items.*;
-import cyano.mineralogy.worldgen.*;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 
 
@@ -41,7 +53,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "2.5.1";
+    public static final String VERSION = "2.6.0";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -335,7 +347,7 @@ public class Mineralogy
     
 
     private static Block getBlock(String id){
-    	return GameData.getBlockRegistry().getObject(id.trim());
+    	return GameData.getBlockRegistry().getObject(new ResourceLocation(id.trim()));
     }
     
     private static int oreWeightCount = 20;
