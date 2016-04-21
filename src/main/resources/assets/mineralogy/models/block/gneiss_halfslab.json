@@ -1,8 +1,0 @@
-{
-    "parent": "mineralogy:block/slab_half",
-    "textures": {
-        "bottom": "mineralogy:blocks/gneiss",
-        "top": "mineralogy:blocks/gneiss",
-        "side": "mineralogy:blocks/gneiss"
-    }
-}

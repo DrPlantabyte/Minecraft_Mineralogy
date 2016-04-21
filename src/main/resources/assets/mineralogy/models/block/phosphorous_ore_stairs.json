@@ -1,8 +1,0 @@
-{
-    "parent": "block/stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/phosphorous_ore",
-        "top": "mineralogy:blocks/phosphorous_ore",
-        "side": "mineralogy:blocks/phosphorous_ore"
-    }
-}

@@ -2,38 +2,21 @@ package cyano.mineralogy;
 
 // DON'T FORGET TO UPDATE mcmod.info FILE!!!
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import cyano.mineralogy.blocks.Chert;
-import cyano.mineralogy.blocks.DryWall;
-import cyano.mineralogy.blocks.Gypsum;
 import cyano.mineralogy.blocks.Ore;
 import cyano.mineralogy.blocks.Rock;
 import cyano.mineralogy.blocks.RockSlab;
 import cyano.mineralogy.blocks.RockStairs;
-import cyano.mineralogy.blocks.Soil;
-import cyano.mineralogy.items.GypsumDust;
-import cyano.mineralogy.items.MineralFertilizer;
-import cyano.mineralogy.items.NitrateDust;
-import cyano.mineralogy.items.PhosphoriteDust;
-import cyano.mineralogy.items.SulfurDust;
 import cyano.mineralogy.worldgen.OreSpawner;
-import cyano.mineralogy.worldgen.StoneReplacer;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -42,8 +25,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import java.util.*;
 
 
 
@@ -108,7 +92,7 @@ public class Mineralogy
 	
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
-    {
+    {/*
     	// load config
     	Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     	config.load();
@@ -234,6 +218,7 @@ public class Mineralogy
     	}
     	
     	config.save();
+    	*/
     }
     
     private static List<String> asList(String list, String delimiter){
@@ -244,7 +229,7 @@ public class Mineralogy
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-    	
+    	/*
 		// event registration, tile entities, renderers
     	
     	// register custom chunk generation
@@ -252,10 +237,12 @@ public class Mineralogy
     	for(int i = 0; i < 16; i++){
     		OreDictionary.registerOre("drywall", drywall[i]);
     	}
+    	*/
     	// register item rendering for blocks
     	if(event.getSide().isClient()){
     		registerItemRenders();
     	}
+
     }
     
     
@@ -267,6 +254,7 @@ public class Mineralogy
     				.register(net.minecraft.item.Item.getItemFromBlock(b), 0, 
     						new ModelResourceLocation(Mineralogy.MODID+":"+name, "inventory"));
     	}
+		/*
     	for(int i = 0; i < 16; i++){
     		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
     				.register(net.minecraft.item.Item.getItemFromBlock(drywall[i]), 0, 
@@ -291,6 +279,8 @@ public class Mineralogy
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 		.register(mineralFertilizer, 0, 
 			new ModelResourceLocation(Mineralogy.MODID+":"+MineralFertilizer.itemName, "inventory"));
+
+			*/
     }
 
     @EventHandler
@@ -376,15 +366,13 @@ public class Mineralogy
      * @param hardness How hard (time duration) the block is to pick. For reference, dirt is 0.5, stone is 1.5, ores are 3, and obsidian is 50
      * @param blastResistance how resistant the block is to explosions. For reference, dirt is 0, stone is 10, and blast-proof materials are 2000
      * @param toolHardnessLevel 0 for wood tools, 1 for stone, 2 for iron, 3 for diamond
-     * @param isStoneEquivalent if true, use in recipes requiring stone
-     * @param isCobblestoneEquivalent if true, use in recipes requiring cobblestone
      * @param hasSmooth if true, then XXX_smooth exists
      * @param hasBricks if true, then XXX_brick exists
      */
     private static void addStoneType(RockType type, String name,double hardness,double blastResistance,int toolHardnessLevel, boolean hasSmooth, boolean hasBricks){
-    	Block b = new Rock(true,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+    	Block b = new Rock(true,(float)hardness,(float)blastResistance,toolHardnessLevel, SoundType.STONE);
     	b.setUnlocalizedName(Mineralogy.MODID +"_"+ name);
-    	b.setCreativeTab(CreativeTabs.tabBlock);
+    	b.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     	GameRegistry.registerBlock(b, name); // MUST REGISTER BLOCK WITH GAME BEFORE DOING ANYTHING ELSE WITH IT!!!
     	mineralogyBlockRegistry.put(name, b);
     	switch(type){
@@ -409,22 +397,22 @@ public class Mineralogy
     	
     	if(hasSmooth){
     		String smoothName = name + "_smooth";
-    		Block b2 = new Rock(false,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+    		Block b2 = new Rock(false,(float)hardness,(float)blastResistance,toolHardnessLevel,SoundType.STONE);
         	b2.setUnlocalizedName(Mineralogy.MODID +"_"+ smoothName);
-        	b2.setCreativeTab(CreativeTabs.tabBlock);
+        	b2.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
         	GameRegistry.registerBlock(b2, smoothName); // MUST REGISTER BLOCK WITH GAME BEFORE DOING ANYTHING ELSE WITH IT!!!
         	GameRegistry.addRecipe(new ItemStack(b2,4), "xx","xx",'x',new ItemStack(b));
         	mineralogyBlockRegistry.put(smoothName, b2);
         	
         	// smoothable blocks have stair versions
-        	Block stair = new RockStairs(b,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+        	Block stair = new RockStairs(b,(float)hardness,(float)blastResistance,toolHardnessLevel,SoundType.STONE);
         	String stairName = name+"_stairs";
         	stair.setUnlocalizedName(Mineralogy.MODID +"_"+ stairName);
         	GameRegistry.registerBlock(stair, stairName);
         	GameRegistry.addRecipe(new ItemStack(stair,4), "x  ","xx ", "xxx",'x',new ItemStack(b));
         	OreDictionary.registerOre("stairCobblestone", stair);
         	mineralogyBlockRegistry.put(stairName, stair);
-        	Block smoothStair = new RockStairs(b,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+        	Block smoothStair = new RockStairs(b,(float)hardness,(float)blastResistance,toolHardnessLevel,SoundType.STONE);
         	String smoothStairName = smoothName+"_stairs";
         	smoothStair.setUnlocalizedName(Mineralogy.MODID +"_"+ smoothStairName);
         	GameRegistry.registerBlock(smoothStair, smoothStairName);
@@ -433,14 +421,14 @@ public class Mineralogy
         	mineralogyBlockRegistry.put(smoothStairName, smoothStair);
         	
         	// smoothable blocks have slab versions
-        	Block slab = new RockSlab(Material.rock,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+        	Block slab = new RockSlab(Material.ROCK,(float)hardness,(float)blastResistance,toolHardnessLevel,SoundType.STONE);
         	String slabName = name+"_slab";
         	slab.setUnlocalizedName(Mineralogy.MODID +"_"+ slabName);
         	GameRegistry.registerBlock(slab, slabName);
         	GameRegistry.addRecipe(new ItemStack(slab,6), "xxx",'x',new ItemStack(b));
         	OreDictionary.registerOre("slabCobblestone", slab);
         	mineralogyBlockRegistry.put(slabName, slab);
-        	Block slab2 = new RockSlab(Material.rock,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+        	Block slab2 = new RockSlab(Material.ROCK,(float)hardness,(float)blastResistance,toolHardnessLevel,SoundType.STONE);
         	String slabName2 = smoothName+"_slab";
         	slab2.setUnlocalizedName(Mineralogy.MODID +"_"+ slabName2);
         	GameRegistry.registerBlock(slab2, slabName2);
@@ -451,15 +439,15 @@ public class Mineralogy
 
         	if(hasBricks){
         		String brickName = name + "_brick";
-        		Block b3 = new Rock(false,(float)hardness*2,(float)blastResistance*1.5f,toolHardnessLevel,Block.soundTypePiston);
+        		Block b3 = new Rock(false,(float)hardness*2,(float)blastResistance*1.5f,toolHardnessLevel,SoundType.STONE);
             	b3.setUnlocalizedName(Mineralogy.MODID +"_"+ brickName);
-            	b3.setCreativeTab(CreativeTabs.tabBlock);
+            	b3.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
             	GameRegistry.registerBlock(b3, brickName); // MUST REGISTER BLOCK WITH GAME BEFORE DOING ANYTHING ELSE WITH IT!!!
             	GameRegistry.addRecipe(new ItemStack(b3,4), "xx","xx",'x',new ItemStack(b2));
             	mineralogyBlockRegistry.put(brickName, b3);
             	
             	// stairs
-            	Block brickStair = new RockStairs(b,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+            	Block brickStair = new RockStairs(b,(float)hardness,(float)blastResistance,toolHardnessLevel,SoundType.STONE);
             	String brickStairName = brickName+"_stairs";
             	brickStair.setUnlocalizedName(Mineralogy.MODID +"_"+ brickStairName);
             	GameRegistry.registerBlock(brickStair, brickStairName);
@@ -468,7 +456,7 @@ public class Mineralogy
             	mineralogyBlockRegistry.put(brickStairName, brickStair);
             	
             	// slab
-            	Block slab3 = new RockSlab(Material.rock,(float)hardness,(float)blastResistance,toolHardnessLevel,Block.soundTypePiston);
+            	Block slab3 = new RockSlab(Material.ROCK,(float)hardness,(float)blastResistance,toolHardnessLevel,SoundType.STONE);
             	String slabName3 = brickName+"_slab";
             	slab3.setUnlocalizedName(Mineralogy.MODID +"_"+ slabName3);
             	GameRegistry.registerBlock(slab3, slabName3);
@@ -482,16 +470,9 @@ public class Mineralogy
 
     
     private static void doRockRecipes(Block b){
-    	List<ItemStack> recipeInputs = new ArrayList<ItemStack>(4);
-		recipeInputs.add(new ItemStack(Blocks.gravel));
-		recipeInputs.add(new ItemStack(Blocks.gravel));
-		recipeInputs.add(new ItemStack(b));
-		recipeInputs.add(new ItemStack(b));
-    	GameRegistry.addRecipe(new net.minecraft.item.crafting.ShapelessRecipes(new ItemStack(Blocks.cobblestone,4), recipeInputs));
-    	
-    	
+    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Blocks.COBBLESTONE,4), b,b,Blocks.GRAVEL, Blocks.GRAVEL));
 		OreDictionary.registerOre("cobblestone", b);
-		GameRegistry.addSmelting(b, new ItemStack(Blocks.stone,1), 0.1f);
+		GameRegistry.addSmelting(b, new ItemStack(Blocks.STONE,1), 0.1f);
     }
     
 }

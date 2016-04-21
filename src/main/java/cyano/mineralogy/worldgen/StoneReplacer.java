@@ -2,6 +2,7 @@ package cyano.mineralogy.worldgen;
 
 import cyano.mineralogy.Mineralogy;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
@@ -35,8 +36,8 @@ public class StoneReplacer implements IWorldGenerator {
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world,
-			IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		if(world.provider.getDimensionId() == 0){
+						 IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+		if(world.provider.getDimension() == 0){
 			getGeology(world).replaceStoneInChunk(chunkX, chunkZ, world);
 		}
 	}

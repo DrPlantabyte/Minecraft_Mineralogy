@@ -1,8 +1,0 @@
-{
-    "parent": "block/stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/gneiss",
-        "top": "mineralogy:blocks/gneiss",
-        "side": "mineralogy:blocks/gneiss"
-    }
-}

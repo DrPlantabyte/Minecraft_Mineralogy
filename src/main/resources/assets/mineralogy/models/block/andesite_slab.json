@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/slab",
+    "textures": {
+        "face": "mineralogy:blocks/andesite",
+        "side": "mineralogy:blocks/andesite"
+    }
+}

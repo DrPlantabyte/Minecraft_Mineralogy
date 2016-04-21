@@ -1,8 +1,0 @@
-{
-    "parent": "block/outer_stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/marble",
-        "top": "mineralogy:blocks/marble",
-        "side": "mineralogy:blocks/marble"
-    }
-}

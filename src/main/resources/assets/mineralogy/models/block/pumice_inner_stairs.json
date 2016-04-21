@@ -1,8 +1,0 @@
-{
-    "parent": "block/inner_stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/pumice",
-        "top": "mineralogy:blocks/pumice",
-        "side": "mineralogy:blocks/pumice"
-    }
-}

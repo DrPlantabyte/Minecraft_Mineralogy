@@ -1,8 +1,0 @@
-{
-    "parent": "block/outer_stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/dolomite_smooth",
-        "top": "mineralogy:blocks/dolomite_smooth",
-        "side": "mineralogy:blocks/dolomite_smooth"
-    }
-}

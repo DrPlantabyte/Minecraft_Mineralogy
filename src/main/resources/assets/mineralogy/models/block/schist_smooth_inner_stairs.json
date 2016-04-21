@@ -1,8 +1,0 @@
-{
-    "parent": "block/inner_stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/schist_smooth",
-        "top": "mineralogy:blocks/schist_smooth",
-        "side": "mineralogy:blocks/schist_smooth"
-    }
-}

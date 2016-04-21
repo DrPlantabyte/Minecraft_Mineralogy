@@ -1,8 +1,0 @@
-{
-    "parent": "block/outer_stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/pegmatite",
-        "top": "mineralogy:blocks/pegmatite",
-        "side": "mineralogy:blocks/pegmatite"
-    }
-}

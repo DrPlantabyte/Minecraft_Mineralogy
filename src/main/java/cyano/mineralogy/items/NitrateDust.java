@@ -11,7 +11,7 @@ public class NitrateDust extends net.minecraft.item.Item {
 	public NitrateDust(){
 		super();
 		this.setUnlocalizedName(Mineralogy.MODID +"_"+ itemName);
-		this.setCreativeTab(CreativeTabs.tabMaterials);
+		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 	
 }

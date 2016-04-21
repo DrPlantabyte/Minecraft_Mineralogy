@@ -1,8 +1,0 @@
-{
-    "parent": "block/inner_stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/shale_brick",
-        "top": "mineralogy:blocks/shale_brick",
-        "side": "mineralogy:blocks/shale_brick"
-    }
-}

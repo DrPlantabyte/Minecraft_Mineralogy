@@ -1,8 +1,0 @@
-{
-    "parent": "mineralogy:block/slab_double",
-    "textures": {
-        "bottom": "mineralogy:blocks/slate_brick",
-        "top": "mineralogy:blocks/slate_brick",
-        "side": "mineralogy:blocks/slate_brick"
-    }
-}

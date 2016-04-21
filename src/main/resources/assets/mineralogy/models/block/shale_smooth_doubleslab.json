@@ -1,8 +1,0 @@
-{
-    "parent": "mineralogy:block/slab_double",
-    "textures": {
-        "bottom": "mineralogy:blocks/shale_smooth",
-        "top": "mineralogy:blocks/shale_smooth",
-        "side": "mineralogy:blocks/shale_smooth"
-    }
-}

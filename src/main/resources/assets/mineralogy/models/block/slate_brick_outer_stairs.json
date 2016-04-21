@@ -1,8 +1,0 @@
-{
-    "parent": "block/outer_stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/slate_brick",
-        "top": "mineralogy:blocks/slate_brick",
-        "side": "mineralogy:blocks/slate_brick"
-    }
-}

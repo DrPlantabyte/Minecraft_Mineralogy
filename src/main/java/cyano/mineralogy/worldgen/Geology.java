@@ -1,16 +1,15 @@
 package cyano.mineralogy.worldgen;
 
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkPrimer;
 import cyano.mineralogy.Mineralogy;
 import cyano.mineralogy.worldgen.math.PerlinNoise2D;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+
+import java.util.List;
+import java.util.Random;
 
 public class Geology {
 
@@ -37,7 +36,6 @@ public class Geology {
 	 * @param seed World seed
 	 * @param geomeSize Approximate size of rock type layers (should be much bigger than <code>rockLayerSize</code>
 	 * @param rockLayerSize Approximate diameter of layers in the X-Z plane
-	 * @param layerFlatness Higher numbers results in thinner rock layers
 	 */
 	public Geology(long seed, double geomeSize, double rockLayerSize){
 		this.seed = seed;
@@ -100,7 +98,7 @@ public class Geology {
 				for(; y > 0; y--){
 					BlockPos coord = new BlockPos(x, y, z);
 					int i = indexBase + y;
-					if(chunk.getBlockState(coord).getBlock().getUnlocalizedName().equals(Blocks.stone.getUnlocalizedName())){
+					if(chunk.getBlockState(coord).getBlock() == Blocks.STONE){
 						int geome = gbase+y;
 						if(geome < -32){
 							// RockType.IGNEOUS;

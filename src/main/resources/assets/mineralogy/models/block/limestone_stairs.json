@@ -1,8 +1,0 @@
-{
-    "parent": "block/stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/limestone",
-        "top": "mineralogy:blocks/limestone",
-        "side": "mineralogy:blocks/limestone"
-    }
-}

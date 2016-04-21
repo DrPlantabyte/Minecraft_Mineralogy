@@ -11,7 +11,7 @@ public class GypsumDust extends net.minecraft.item.Item {
 	public GypsumDust(){
 		super();
 		this.setUnlocalizedName(Mineralogy.MODID +"_"+ itemName);
-		this.setCreativeTab(CreativeTabs.tabMaterials);
+		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 	
 }

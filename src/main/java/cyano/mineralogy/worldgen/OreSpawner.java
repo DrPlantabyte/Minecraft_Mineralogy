@@ -1,14 +1,16 @@
 package cyano.mineralogy.worldgen;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import net.minecraftforge.fml.common.eventhandler.Event;
+
+import java.util.Random;
 
 public class OreSpawner implements IWorldGenerator {
 
@@ -32,7 +34,8 @@ public class OreSpawner implements IWorldGenerator {
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world,
-			IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+						 IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+
 		random.setSeed(random.nextLong() ^ hash);
 		random.nextInt();
 		final float r = random.nextFloat();
@@ -41,8 +44,16 @@ public class OreSpawner implements IWorldGenerator {
             int y = random.nextInt(maxY - minY) + minY;
             int z = (chunkZ << 4) + random.nextInt(16);
         //    System.out.println("Generating deposite of "+ore.getUnlocalizedName()+" at ("+x+","+y+","+z+")");
-            oreGen.generate(world, random, new BlockPos(x,y,z));
+			BlockPos pos = new BlockPos(x,y,z);
+			OreGenEvent oreEvent = new OreGenEvent(world,random,pos);
+			net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(oreEvent);
+			if(oreEvent.getResult() == Event.Result.DENY) {
+				// canceled by other mod
+				continue;
+			}
+			oreGen.generate(world, random, pos);
 		}
 	}
+
 
 }

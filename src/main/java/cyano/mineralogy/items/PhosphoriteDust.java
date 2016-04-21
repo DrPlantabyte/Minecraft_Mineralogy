@@ -11,7 +11,7 @@ public class PhosphoriteDust extends net.minecraft.item.Item {
 	public PhosphoriteDust(){
 		super();
 		this.setUnlocalizedName(Mineralogy.MODID +"_"+ itemName);
-		this.setCreativeTab(CreativeTabs.tabMaterials);
+		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 	
 }

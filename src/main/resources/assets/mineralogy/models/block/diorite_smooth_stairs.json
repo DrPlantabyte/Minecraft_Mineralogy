@@ -1,8 +1,0 @@
-{
-    "parent": "block/stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/diorite_smooth",
-        "top": "mineralogy:blocks/diorite_smooth",
-        "side": "mineralogy:blocks/diorite_smooth"
-    }
-}

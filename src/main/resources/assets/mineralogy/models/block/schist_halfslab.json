@@ -1,8 +1,0 @@
-{
-    "parent": "mineralogy:block/slab_half",
-    "textures": {
-        "bottom": "mineralogy:blocks/schist",
-        "top": "mineralogy:blocks/schist",
-        "side": "mineralogy:blocks/schist"
-    }
-}

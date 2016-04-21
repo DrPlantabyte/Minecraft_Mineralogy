@@ -1,8 +1,0 @@
-{
-    "parent": "mineralogy:block/slab_double",
-    "textures": {
-        "bottom": "mineralogy:blocks/pumice",
-        "top": "mineralogy:blocks/pumice",
-        "side": "mineralogy:blocks/pumice"
-    }
-}

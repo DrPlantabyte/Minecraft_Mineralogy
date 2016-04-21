@@ -1,8 +1,0 @@
-{
-    "parent": "mineralogy:block/slab_half",
-    "textures": {
-        "bottom": "mineralogy:blocks/conglomerate",
-        "top": "mineralogy:blocks/conglomerate",
-        "side": "mineralogy:blocks/conglomerate"
-    }
-}

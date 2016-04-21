@@ -1,5 +1,5 @@
 {
-    "parent": "mineralogy:block/block",
+    "parent": "mineralogy:block/tile",
     "textures": {
         "face": "mineralogy:blocks/andesite_smooth"
     }

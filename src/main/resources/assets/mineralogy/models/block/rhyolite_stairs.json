@@ -1,8 +1,0 @@
-{
-    "parent": "block/stairs",
-    "textures": {
-        "bottom": "mineralogy:blocks/rhyolite",
-        "top": "mineralogy:blocks/rhyolite",
-        "side": "mineralogy:blocks/rhyolite"
-    }
-}

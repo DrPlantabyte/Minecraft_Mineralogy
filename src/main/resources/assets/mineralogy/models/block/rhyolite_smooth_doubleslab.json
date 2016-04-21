@@ -1,8 +1,0 @@
-{
-    "parent": "mineralogy:block/slab_double",
-    "textures": {
-        "bottom": "mineralogy:blocks/rhyolite_smooth",
-        "top": "mineralogy:blocks/rhyolite_smooth",
-        "side": "mineralogy:blocks/rhyolite_smooth"
-    }
-}
