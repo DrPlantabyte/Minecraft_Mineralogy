@@ -54,7 +54,7 @@ public class Mineralogy
     /** thickness of rock layers */
     public static int GEOM_LAYER_THICKNESS = 8;
     
-    public static boolean SMETLABLE_GRAVEL = true;
+    public static boolean SMELTABLE_GRAVEL = true;
     
  //   public static OrePlacer orePlacementGenerator = null;
 
@@ -92,12 +92,23 @@ public class Mineralogy
 	
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
-    {/*
+    {
+		// Testing code
+		Block b1 = new Rock(true, 1,1,1,SoundType.STONE);
+		b1.setUnlocalizedName(MODID+".andesite");
+		b1.setRegistryName(MODID,"andesite");
+		//GameRegistry.register(b1).setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+		//GameRegistry.registerBlock(b1,"andesite");
+
+		//GameRegistry.register(new Rock(false, 1,1,1,SoundType.STONE).setRegistryName(MODID,"andesite_slab")).setUnlocalizedName(MODID+".andesite_slab").setCreativeTab(CreativeTabs.BUILDING_BLOCKS); // need to register item separately
+		mineralogyBlockRegistry.put("andesite_slab",GameRegistry.registerBlock(new RockSlab(Material.ROCK, 1,1,1,SoundType.STONE),"andesite_slab").setUnlocalizedName(MODID+".andesite_slab").setCreativeTab(CreativeTabs.BUILDING_BLOCKS));
+
+		/*
     	// load config
     	Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     	config.load();
 
-    	SMETLABLE_GRAVEL = config.getBoolean("SMETLABLE_GRAVEL", "options", SMETLABLE_GRAVEL, 
+    	SMELTABLE_GRAVEL = config.getBoolean("SMELTABLE_GRAVEL", "options", SMELTABLE_GRAVEL,
    "If true, then gravel can be smelted into generic stone");
     	GEOME_SIZE = config.getInt("GEOME_SIZE", "world-gen", GEOME_SIZE, 4, Short.MAX_VALUE, 
    "Making this value larger increases the size of regions of igneous, \n"
@@ -213,7 +224,7 @@ public class Mineralogy
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,4),Items.sugar,NitrateDust.dictionaryName,SulfurDust.dictionaryName));
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(mineralFertilizer,1),NitrateDust.dictionaryName,PhosphoriteDust.dictionaryName));
     	
-    	if(SMETLABLE_GRAVEL){
+    	if(SMELTABLE_GRAVEL){
     		GameRegistry.addSmelting(Blocks.gravel, new ItemStack(Blocks.stone), 0.1f);
     	}
     	
@@ -370,7 +381,7 @@ public class Mineralogy
      * @param hasBricks if true, then XXX_brick exists
      */
     private static void addStoneType(RockType type, String name,double hardness,double blastResistance,int toolHardnessLevel, boolean hasSmooth, boolean hasBricks){
-    	Block b = new Rock(true,(float)hardness,(float)blastResistance,toolHardnessLevel, SoundType.STONE);
+    	Block b = new Rock(true, (float)hardness,(float)blastResistance,toolHardnessLevel, SoundType.STONE);
     	b.setUnlocalizedName(Mineralogy.MODID +"_"+ name);
     	b.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     	GameRegistry.registerBlock(b, name); // MUST REGISTER BLOCK WITH GAME BEFORE DOING ANYTHING ELSE WITH IT!!!
@@ -474,5 +485,6 @@ public class Mineralogy
 		OreDictionary.registerOre("cobblestone", b);
 		GameRegistry.addSmelting(b, new ItemStack(Blocks.STONE,1), 0.1f);
     }
-    
+
+
 }

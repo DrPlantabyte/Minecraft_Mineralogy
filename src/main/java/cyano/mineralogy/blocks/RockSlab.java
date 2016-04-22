@@ -14,6 +14,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLLog;
 
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class RockSlab extends net.minecraft.block.Block{
 		}
 	}
 
-	
+
 	public RockSlab(Material mat, float hardness,float blastResistance,int toolHardnessLevel,SoundType sound) {
 		super(mat);
 		this.setHardness((float)hardness); // dirt is 0.5, grass is 0.6, stone is 1.5,iron ore is 3, obsidian is 50
@@ -84,6 +85,7 @@ public class RockSlab extends net.minecraft.block.Block{
 	public IBlockState onBlockPlaced(final World w, final BlockPos coord, final EnumFacing face,
 									 final float partialX, final float partialY, final float partialZ,
 									 final int i, final EntityLivingBase placer) {
+		FMLLog.info("Partial block coords = (%s, %s, %s)",partialX,partialY,partialZ);// TODO: remove
 		return this.getDefaultState().withProperty(FACING, face);
 	}
 

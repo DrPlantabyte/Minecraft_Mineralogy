@@ -12,7 +12,7 @@ public class Gypsum extends Rock{
 
 	private final String name = "gypsum";
 	public Gypsum(){
-		super(false,(float)0.75,(float)1,0, SoundType.STONE);
+		super(false,(float)0.75,(float)1,0, SoundType.GROUND);
 		this.setUnlocalizedName(Mineralogy.MODID +"_"+ name);
 		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 	}

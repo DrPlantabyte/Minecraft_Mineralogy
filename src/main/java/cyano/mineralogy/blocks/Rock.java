@@ -6,7 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class Rock extends net.minecraft.block.Block{
+public class Rock extends net.minecraft.block.Block {
 
 	
 	
@@ -18,10 +18,10 @@ public class Rock extends net.minecraft.block.Block{
 		this.setSoundType(sound); // sound for stone
 		this.setHarvestLevel("pickaxe", toolHardnessLevel);
 	}
-	
+
 	public final boolean isStoneEquivalent;
 	
-	@Override public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, com.google.common.base.Predicate<IBlockState> target) { return true; }
+	@Override public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, com.google.common.base.Predicate<IBlockState> target) { return isStoneEquivalent; }
     
     
 }
