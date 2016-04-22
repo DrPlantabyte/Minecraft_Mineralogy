@@ -85,8 +85,81 @@ public class RockSlab extends net.minecraft.block.Block{
 	public IBlockState onBlockPlaced(final World w, final BlockPos coord, final EnumFacing face,
 									 final float partialX, final float partialY, final float partialZ,
 									 final int i, final EntityLivingBase placer) {
-		FMLLog.info("Partial block coords = (%s, %s, %s)",partialX,partialY,partialZ);// TODO: remove
-		return this.getDefaultState().withProperty(FACING, face);
+		FMLLog.info("Partial block coords = (%s, %s, %s) on face %s",partialX,partialY,partialZ, face);// TODO: remove
+
+		IBlockState defaultState = this.getDefaultState().withProperty(FACING, face);
+		// redimension to face-local up and right dimensions
+		float up, right;
+		EnumFacing.Axis upRotationAxis, rightRotationAxis;
+		switch(face){
+			case UP: // works
+				up = partialZ - 0.5F;
+				right = partialX - 0.5F;
+				upRotationAxis = EnumFacing.Axis.X;
+				rightRotationAxis = EnumFacing.Axis.Z;
+				break;
+			case EAST: // works
+				up = partialY - 0.5F;
+				right = partialZ - 0.5F;
+				upRotationAxis = EnumFacing.Axis.Z;
+				rightRotationAxis = EnumFacing.Axis.Y;
+				break;
+			case SOUTH:
+				up = 0.5F - partialY;
+				right = 0.5F - partialX;
+				upRotationAxis = EnumFacing.Axis.X;
+				rightRotationAxis = EnumFacing.Axis.Y;
+				break;
+			case DOWN:
+				up = 0.5F - partialZ;
+				right = 0.5F - partialX;
+				upRotationAxis = EnumFacing.Axis.X;
+				rightRotationAxis = EnumFacing.Axis.Z;
+				break;
+			case WEST:
+				up = 0.5F - partialY;
+				right = 0.5F - partialZ;
+				upRotationAxis = EnumFacing.Axis.Z;
+				rightRotationAxis = EnumFacing.Axis.Y;
+				break;
+			case NORTH: // works
+				up = partialY - 0.5F;
+				right = partialX - 0.5F;
+				upRotationAxis = EnumFacing.Axis.X;
+				rightRotationAxis = EnumFacing.Axis.Y;
+				break;
+			default: return defaultState;
+		}
+		FMLLog.info("face coordinates = (%s, %s) on face %s",right,up, face);// TODO: remove
+		if(Math.abs(up) < 0.25F && Math.abs(right) < 0.25F) {
+			FMLLog.info("no rotation");// TODO: remove
+			return defaultState;
+		}
+		boolean upOrRight = up + right > 0;
+		boolean upOrLeft = up - right > 0;
+		if(upOrRight){
+			// up or right
+			if(upOrLeft){
+				// up
+				FMLLog.info("rotate up");// TODO: remove
+				return defaultState.withProperty(FACING,face.rotateAround(upRotationAxis));
+			} else {
+				// right
+				FMLLog.info("rotate right");// TODO: remove
+				return defaultState.withProperty(FACING,face.rotateAround(rightRotationAxis).getOpposite());
+			}
+		} else {
+			// down or left
+			if(upOrLeft){
+				// left
+				FMLLog.info("rotate left");// TODO: remove
+				return defaultState.withProperty(FACING,face.rotateAround(rightRotationAxis));
+			} else {
+				// down
+				FMLLog.info("rotate down");// TODO: remove
+				return defaultState.withProperty(FACING,face.rotateAround(upRotationAxis).getOpposite());
+			}
+		}
 	}
 
 	@Override
