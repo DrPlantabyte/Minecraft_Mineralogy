@@ -14,7 +14,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLLog;
 
 import java.util.List;
 
@@ -85,8 +84,6 @@ public class RockSlab extends net.minecraft.block.Block{
 	public IBlockState onBlockPlaced(final World w, final BlockPos coord, final EnumFacing face,
 									 final float partialX, final float partialY, final float partialZ,
 									 final int i, final EntityLivingBase placer) {
-		FMLLog.info("Partial block coords = (%s, %s, %s) on face %s",partialX,partialY,partialZ, face);// TODO: remove
-
 		IBlockState defaultState = this.getDefaultState().withProperty(FACING, face);
 		// redimension to face-local up and right dimensions
 		float up, right;
@@ -130,9 +127,8 @@ public class RockSlab extends net.minecraft.block.Block{
 				break;
 			default: return defaultState;
 		}
-		FMLLog.info("face coordinates = (%s, %s) on face %s",right,up, face);// TODO: remove
 		if(Math.abs(up) < 0.25F && Math.abs(right) < 0.25F) {
-			FMLLog.info("no rotation");// TODO: remove
+			// no rotation
 			return defaultState;
 		}
 		boolean upOrRight = up + right > 0;
@@ -141,22 +137,18 @@ public class RockSlab extends net.minecraft.block.Block{
 			// up or right
 			if(upOrLeft){
 				// up
-				FMLLog.info("rotate up");// TODO: remove
 				return defaultState.withProperty(FACING,face.rotateAround(upRotationAxis));
 			} else {
 				// right
-				FMLLog.info("rotate right");// TODO: remove
 				return defaultState.withProperty(FACING,face.rotateAround(rightRotationAxis).getOpposite());
 			}
 		} else {
 			// down or left
 			if(upOrLeft){
 				// left
-				FMLLog.info("rotate left");// TODO: remove
 				return defaultState.withProperty(FACING,face.rotateAround(rightRotationAxis));
 			} else {
 				// down
-				FMLLog.info("rotate down");// TODO: remove
 				return defaultState.withProperty(FACING,face.rotateAround(upRotationAxis).getOpposite());
 			}
 		}

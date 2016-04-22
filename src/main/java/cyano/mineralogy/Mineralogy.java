@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -99,9 +100,22 @@ public class Mineralogy
 		b1.setRegistryName(MODID,"andesite");
 		//GameRegistry.register(b1).setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 		//GameRegistry.registerBlock(b1,"andesite");
+		mineralogyBlockRegistry.put("andesite",GameRegistry.register(b1).setUnlocalizedName(MODID+".andesite").setCreativeTab(CreativeTabs.BUILDING_BLOCKS)); // need to register item separately
+		GameRegistry.register(new ItemBlock(b1).setRegistryName(b1.getRegistryName()));
 
-		//GameRegistry.register(new Rock(false, 1,1,1,SoundType.STONE).setRegistryName(MODID,"andesite_slab")).setUnlocalizedName(MODID+".andesite_slab").setCreativeTab(CreativeTabs.BUILDING_BLOCKS); // need to register item separately
-		mineralogyBlockRegistry.put("andesite_slab",GameRegistry.registerBlock(new RockSlab(Material.ROCK, 1,1,1,SoundType.STONE),"andesite_slab").setUnlocalizedName(MODID+".andesite_slab").setCreativeTab(CreativeTabs.BUILDING_BLOCKS));
+		Block b2 = new Rock(false, 1,1,1,SoundType.STONE).setRegistryName(MODID,"andesite_slab");
+		mineralogyBlockRegistry.put("andesite_slab",GameRegistry.register(b2).setUnlocalizedName(MODID+".andesite_slab").setCreativeTab(CreativeTabs.BUILDING_BLOCKS)); // need to register item separately
+		GameRegistry.register(new ItemBlock(b2).setRegistryName(b2.getRegistryName()));
+		//mineralogyBlockRegistry.put("andesite_slab",GameRegistry.registerBlock(new RockSlab(Material.ROCK, 1,1,1,SoundType.STONE),"andesite_slab").setUnlocalizedName(MODID+".andesite_slab").setCreativeTab(CreativeTabs.BUILDING_BLOCKS));
+
+
+		Block b3 = new RockStairs(b1, 1,1,1,SoundType.STONE).setRegistryName(MODID,"andesite_stairs");
+		mineralogyBlockRegistry.put("andesite_stairs",GameRegistry.register(b3).setUnlocalizedName(MODID+".andesite_stairs").setCreativeTab(CreativeTabs.BUILDING_BLOCKS)); // need to register item separately
+		GameRegistry.register(new ItemBlock(b3).setRegistryName(b3.getRegistryName()));
+
+		Block b4 = new Rock(false, 1,1,1,SoundType.STONE).setRegistryName(MODID,"andesite_brick");
+		mineralogyBlockRegistry.put("andesite_brick",GameRegistry.register(b4).setUnlocalizedName(MODID+".andesite_brick").setCreativeTab(CreativeTabs.BUILDING_BLOCKS)); // need to register item separately
+		GameRegistry.register(new ItemBlock(b4).setRegistryName(b4.getRegistryName()));
 
 		/*
     	// load config
