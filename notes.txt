@@ -10,22 +10,21 @@ rhyolite
 pegmatite
 	(sedimentary)
 shale
-sandstone
+sandstone*
 conglomerate
 dolomite
 limestone
-chert
 	(metamorphic)
 slate
 schist
 gneiss
-marble*
-phyllite*
-amphibolite*
-hornfels*
+marble
+phyllite
+amphibolite
 
 Ores:
 gypsum (sedimentary layer)
+chert (sedimentary layer)
 phosphorite
 salt peter (aka nitrate)
 
