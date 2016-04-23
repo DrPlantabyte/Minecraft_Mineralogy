@@ -1,5 +1,5 @@
 {
-    "parent": "mineralogy:block/stair_outer",
+    "parent": "mineralogy:block/stairs_normal",
     "textures": {
         "face": "mineralogy:blocks/andesite"
     }

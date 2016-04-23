@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "position=bottom": { "model": "mineralogy:rhyolite_halfslab" },
-        "position=top": { "model": "mineralogy:rhyolite_halfslab", "x":180 },
-        "position=double": { "model": "mineralogy:rhyolite_doubleslab" }
-    }
-}

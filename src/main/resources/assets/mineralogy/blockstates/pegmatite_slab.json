@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "position=bottom": { "model": "mineralogy:pegmatite_halfslab" },
-        "position=top": { "model": "mineralogy:pegmatite_halfslab", "x":180 },
-        "position=double": { "model": "mineralogy:pegmatite_doubleslab" }
-    }
-}

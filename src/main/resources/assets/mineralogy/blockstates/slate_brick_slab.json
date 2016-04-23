@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "position=bottom": { "model": "mineralogy:slate_brick_halfslab" },
-        "position=top": { "model": "mineralogy:slate_brick_halfslab", "x":180 },
-        "position=double": { "model": "mineralogy:slate_brick_doubleslab" }
-    }
-}

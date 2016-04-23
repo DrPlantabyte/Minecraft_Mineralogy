@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "position=bottom": { "model": "mineralogy:marble_halfslab" },
-        "position=top": { "model": "mineralogy:marble_halfslab", "x":180 },
-        "position=double": { "model": "mineralogy:marble_doubleslab" }
-    }
-}

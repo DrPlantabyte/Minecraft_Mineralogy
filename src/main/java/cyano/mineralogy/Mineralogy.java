@@ -113,8 +113,8 @@ public class Mineralogy
 		mineralogyBlockRegistry.put("andesite_stairs",GameRegistry.register(b3).setUnlocalizedName(MODID+".andesite_stairs").setCreativeTab(CreativeTabs.BUILDING_BLOCKS)); // need to register item separately
 		GameRegistry.register(new ItemBlock(b3).setRegistryName(b3.getRegistryName()));
 
-		Block b4 = new Rock(false, 1,1,1,SoundType.STONE).setRegistryName(MODID,"andesite_brick");
-		mineralogyBlockRegistry.put("andesite_brick",GameRegistry.register(b4).setUnlocalizedName(MODID+".andesite_brick").setCreativeTab(CreativeTabs.BUILDING_BLOCKS)); // need to register item separately
+		Block b4 = new Rock(false, 1,1,1,SoundType.STONE).setRegistryName(MODID,"andesite_bricks");
+		mineralogyBlockRegistry.put("andesite_bricks",GameRegistry.register(b4).setUnlocalizedName(MODID+".andesite_bricks").setCreativeTab(CreativeTabs.BUILDING_BLOCKS)); // need to register item separately
 		GameRegistry.register(new ItemBlock(b4).setRegistryName(b4.getRegistryName()));
 
 		/*

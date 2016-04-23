@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "position=bottom": { "model": "mineralogy:gneiss_smooth_halfslab" },
-        "position=top": { "model": "mineralogy:gneiss_smooth_halfslab", "x":180 },
-        "position=double": { "model": "mineralogy:gneiss_smooth_doubleslab" }
-    }
-}
