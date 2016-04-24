@@ -1,7 +1,0 @@
-{
-    "parent": "mineralogy:block/pane_n",
-    "textures": {
-        "edge": "mineralogy:blocks/drywall_top",
-        "pane": "mineralogy:blocks/drywall_orange"
-    }
-}

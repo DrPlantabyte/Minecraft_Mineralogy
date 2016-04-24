@@ -18,22 +18,18 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.*;
-
 
 
 
@@ -49,8 +45,10 @@ public class Mineralogy
     public static final List<Block> metamorphicStones = new ArrayList<Block>();
     /** stone block replacesments that are igneous */
     public static final List<Block> igneousStones = new ArrayList<Block>();
-    /** all blocks used in this mod (blockID,block)*/
-    public static final Map<String,Block> mineralogyBlockRegistry = new HashMap<String,Block>();
+	/** all blocks used in this mod (blockID,block)*/
+	public static final Map<String,Block> mineralogyBlockRegistry = new HashMap<String,Block>();
+	/** all items used in this mod (blockID,block)*/
+	public static final Map<String,Item> mineralogyItemRegistry = new HashMap<String,Item>();
     
     /** size of rock layers */
     public static double ROCK_LAYER_NOISE = 32; 
@@ -154,19 +152,19 @@ public class Mineralogy
 
 
 		// add items
-		gypsumPowder = GameRegistry.register(new GypsumDust().setRegistryName(MODID,GypsumDust.itemName).setCreativeTab(CreativeTabs.MATERIALS));
+		gypsumPowder = registerItem(new GypsumDust(),GypsumDust.itemName).setCreativeTab(CreativeTabs.MATERIALS);
 		OreDictionary.registerOre(GypsumDust.dictionaryName, gypsumPowder);
 
-		sulphurPowder = GameRegistry.register(new SulfurDust().setRegistryName(MODID, SulfurDust.itemName).setCreativeTab(CreativeTabs.MATERIALS));
+		sulphurPowder = registerItem(new SulfurDust(), SulfurDust.itemName).setCreativeTab(CreativeTabs.MATERIALS);
 		OreDictionary.registerOre(SulfurDust.dictionaryName, sulphurPowder);
 
-		phosphorousPowder = GameRegistry.register(new PhosphoriteDust().setRegistryName(MODID, PhosphoriteDust.itemName).setCreativeTab(CreativeTabs.MATERIALS));
+		phosphorousPowder = registerItem(new PhosphoriteDust(), PhosphoriteDust.itemName).setCreativeTab(CreativeTabs.MATERIALS);
 		OreDictionary.registerOre(PhosphoriteDust.dictionaryName, phosphorousPowder);
 
-		nitratePowder = GameRegistry.register(new NitrateDust().setRegistryName(MODID, NitrateDust.itemName).setCreativeTab(CreativeTabs.MATERIALS));
+		nitratePowder = registerItem(new NitrateDust(), NitrateDust.itemName).setCreativeTab(CreativeTabs.MATERIALS);
 		OreDictionary.registerOre(NitrateDust.dictionaryName, nitratePowder);
 
-		mineralFertilizer = GameRegistry.register(new MineralFertilizer().setRegistryName(MODID, MineralFertilizer.itemName).setCreativeTab(CreativeTabs.MATERIALS));
+		mineralFertilizer = registerItem(new MineralFertilizer(), MineralFertilizer.itemName).setCreativeTab(CreativeTabs.MATERIALS);
 		OreDictionary.registerOre(MineralFertilizer.dictionaryName, mineralFertilizer);
 
 
@@ -284,39 +282,13 @@ public class Mineralogy
     
     
     private void registerItemRenders(){
-    	
-    	for(String name : mineralogyBlockRegistry.keySet()){
-    		Block b = Mineralogy.mineralogyBlockRegistry.get(name);
-    		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    				.register(net.minecraft.item.Item.getItemFromBlock(b), 0, 
-    						new ModelResourceLocation(Mineralogy.MODID+":"+name, "inventory"));
-    	}
 
-    	for(int i = 0; i < 16; i++){
-    		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    				.register(net.minecraft.item.Item.getItemFromBlock(drywall[i]), 0, 
-    						new ModelResourceLocation(Mineralogy.MODID+":drywall_"+colorSuffixes[i], "inventory"));
-    	}
 
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-			.register(gypsumPowder, 0, 
-				new ModelResourceLocation(Mineralogy.MODID+":"+GypsumDust.itemName, "inventory"));
-        
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-		.register(sulphurPowder, 0, 
-			new ModelResourceLocation(Mineralogy.MODID+":"+SulfurDust.itemName, "inventory"));
-        
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-		.register(phosphorousPowder, 0, 
-			new ModelResourceLocation(Mineralogy.MODID+":"+PhosphoriteDust.itemName, "inventory"));
-        
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-		.register(nitratePowder, 0, 
-			new ModelResourceLocation(Mineralogy.MODID+":"+NitrateDust.itemName, "inventory"));
-        
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-		.register(mineralFertilizer, 0, 
-			new ModelResourceLocation(Mineralogy.MODID+":"+MineralFertilizer.itemName, "inventory"));
+		for(String name : mineralogyItemRegistry.keySet()){
+			Item i = Mineralogy.mineralogyItemRegistry.get(name);
+    		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+    				.register(i, 0, new ModelResourceLocation(Mineralogy.MODID+":"+name, "inventory"));
+    	}
 
     }
 
@@ -373,7 +345,7 @@ public class Mineralogy
     
 
     private static Block getBlock(String id){
-    	return GameData.getBlockRegistry().getObject(new ResourceLocation(id.trim()));
+    	return Block.getBlockFromName(id);
     }
     
     private static int oreWeightCount = 20;
@@ -393,7 +365,8 @@ public class Mineralogy
 		StringBuilder sb = new StringBuilder();
 		String[] words = s.split("_");
 		boolean first = true;
-		for(int i = 0; i < words.length; i++){
+		//for(int i = 0; i < words.length; i++){
+		for(int i = words.length-1; i < words.length; i++){
 			if(!first) sb.append(" ");
 			first = false;
 			sb.append(words[i].substring(0,1).toUpperCase()).append(words[i].substring(1));
@@ -403,11 +376,19 @@ public class Mineralogy
 
 	private static Block registerBlock(Block b, String name){
 		GameRegistry.register(b.setRegistryName(MODID,name));
-		GameRegistry.register(new ItemBlock(b).setRegistryName(b.getRegistryName()));
-		mineralogyBlockRegistry.put(name,b);
 		b.setUnlocalizedName(MODID+"."+name);
-		FMLLog.info("%s: new block = %s=%s",MODID,b.getUnlocalizedName(),formatName(name));
+		registerItem(new ItemBlock(b),name);
+		mineralogyBlockRegistry.put(name,b);
+		//FMLLog.info("%s: added %s=%s",MODID,b.getUnlocalizedName(),formatName(name));
 		return b;
+	}
+
+	private static Item registerItem(Item i, String name){
+		GameRegistry.register(i.setRegistryName(MODID,name));
+		mineralogyItemRegistry.put(name,i);
+		i.setUnlocalizedName(MODID+"."+name);
+		//if(!(i instanceof ItemBlock))FMLLog.info("%s: added %s=%s",MODID,i.getUnlocalizedName(),formatName(name));
+		return i;
 	}
 
 	/**
