@@ -5,7 +5,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -31,7 +30,7 @@ public class Chert extends Rock{
 		if(prng.nextInt(10) == 0) {
 			return Arrays.asList(new ItemStack(Items.FLINT, 1 + Math.max(0,fortune)));
 		} else {
-			return Arrays.asList(new ItemStack(Item.getItemFromBlock(this)));
+			return super.getDrops(world,pos,state,fortune);
 		}
 	}
 }

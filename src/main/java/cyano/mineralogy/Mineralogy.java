@@ -5,6 +5,7 @@ package cyano.mineralogy;
 import cyano.mineralogy.blocks.*;
 import cyano.mineralogy.items.*;
 import cyano.mineralogy.worldgen.OreSpawner;
+import cyano.mineralogy.worldgen.StoneReplacer;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.Minecraft;
@@ -104,7 +105,7 @@ public class Mineralogy
     	// load config
     	Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     	config.load();
-/*
+
     	SMELTABLE_GRAVEL = config.getBoolean("SMELTABLE_GRAVEL", "options", SMELTABLE_GRAVEL,
    "If true, then gravel can be smelted into generic stone");
    		DROP_COBBLESTONE = config.getBoolean("DROP_COBBLESTONE", "options", DROP_COBBLESTONE,
@@ -125,7 +126,7 @@ public class Mineralogy
     	sedimentaryWhitelist.addAll(asList(config.getString("sedimentary_whitelist", "world-gen", "", "Adds blocks to rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
     	metamorphicWhitelist.addAll(asList(config.getString("metamorphic_whitelist", "world-gen", "", "Adds blocks to rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
 
-*/
+
 
 
 		// Blocks, Items, World-gen
@@ -267,16 +268,14 @@ public class Mineralogy
 		// less generic stone slab recipe
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.STONE_SLAB,6,0),"xxx", 'x',Blocks.STONE));
 
-    	/*
-		// event registration, tile entities, renderers
-    	
+
+		// event registration, tile entities
+    	// (none)
+
     	// register custom chunk generation
     	GameRegistry.registerWorldGenerator(new StoneReplacer(), 10);
-    	for(int i = 0; i < 16; i++){
-    		OreDictionary.registerOre("drywall", drywall[i]);
-    	}
-    	*/
-    	// register item rendering for blocks
+
+    	// register renderers
     	if(event.getSide().isClient()){
     		registerItemRenders();
     	}
@@ -292,7 +291,7 @@ public class Mineralogy
     				.register(net.minecraft.item.Item.getItemFromBlock(b), 0, 
     						new ModelResourceLocation(Mineralogy.MODID+":"+name, "inventory"));
     	}
-		
+
     	for(int i = 0; i < 16; i++){
     		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
     				.register(net.minecraft.item.Item.getItemFromBlock(drywall[i]), 0, 
