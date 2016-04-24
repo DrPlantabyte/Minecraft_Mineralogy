@@ -127,39 +127,6 @@ public class Mineralogy
 
 */
 
-    	/*
-    	for(int i = 0; i < 16; i++){
-    		drywall[i] = new DryWall(colorSuffixes[i]);
-    		GameRegistry.registerBlock(drywall[i], "drywall_"+colorSuffixes[i]);
-    		OreDictionary.registerOre("drywall", drywall[i]);
-    	}
-    	
-    	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(drywall[7],3),"pgp","pgp","pgp",'p',Items.paper,'g',GypsumDust.dictionaryName));
-    	
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 0] ,1),"drywall","dyeBlack"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 1] ,1),"drywall","dyeRed"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 2] ,1),"drywall","dyeGreen"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 3] ,1),"drywall","dyeBrown"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 4] ,1),"drywall","dyeBlue"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 5] ,1),"drywall","dyePurple"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 6] ,1),"drywall","dyeCyan"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 7] ,1),"drywall","dyeLightGray"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 8] ,1),"drywall","dyeGray"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 9] ,1),"drywall","dyePink"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[10],1),"drywall","dyeLime"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[11],1),"drywall","dyeYellow"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[12],1),"drywall","dyeLightBlue"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[13],1),"drywall","dyeMagenta"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[14],1),"drywall","dyeOrange"));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[15],1),"drywall","dyeWhite"));
-    	
-    	
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,4),new ItemStack(Items.coal,1,1),NitrateDust.dictionaryName,SulfurDust.dictionaryName));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,4),Items.sugar,NitrateDust.dictionaryName,SulfurDust.dictionaryName));
-    	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(mineralFertilizer,1),NitrateDust.dictionaryName,PhosphoriteDust.dictionaryName));
-
-
-    	*/
 
 		// Blocks, Items, World-gen
 
@@ -231,6 +198,15 @@ public class Mineralogy
 		config.save();
 
 
+		for(int i = 0; i < 16; i++){
+			drywall[i] = registerBlock(new DryWall(colorSuffixes[i]), "drywall_"+colorSuffixes[i]);
+			OreDictionary.registerOre("drywall", drywall[i]);
+		}
+
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(drywall[7],3),"pgp","pgp","pgp",'p',Items.PAPER,'g',GypsumDust.dictionaryName));
+
+
+
     }
     
     private static List<String> asList(String list, String delimiter){
@@ -241,6 +217,31 @@ public class Mineralogy
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
+		// recipes
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 0] ,1),"drywall","dyeBlack"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 1] ,1),"drywall","dyeRed"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 2] ,1),"drywall","dyeGreen"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 3] ,1),"drywall","dyeBrown"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 4] ,1),"drywall","dyeBlue"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 5] ,1),"drywall","dyePurple"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 6] ,1),"drywall","dyeCyan"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 7] ,1),"drywall","dyeLightGray"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 8] ,1),"drywall","dyeGray"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[ 9] ,1),"drywall","dyePink"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[10],1),"drywall","dyeLime"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[11],1),"drywall","dyeYellow"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[12],1),"drywall","dyeLightBlue"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[13],1),"drywall","dyeMagenta"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[14],1),"drywall","dyeOrange"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[15],1),"drywall","dyeWhite"));
+
+
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.GUNPOWDER,4),new ItemStack(Items.COAL,1,1),NitrateDust.dictionaryName,SulfurDust.dictionaryName));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.GUNPOWDER,4),"dustCarbon",NitrateDust.dictionaryName,SulfurDust.dictionaryName));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.GUNPOWDER,4),Items.SUGAR,NitrateDust.dictionaryName,SulfurDust.dictionaryName));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(mineralFertilizer,1),NitrateDust.dictionaryName,PhosphoriteDust.dictionaryName));
+
+		// recipe modifications
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_AXE),"xx","xy"," y", 'x',"stone",'y',"stickWood"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_HOE),"xx"," y"," y", 'x',"stone",'y',"stickWood"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_PICKAXE),"xxx"," y "," y ", 'x',"stone",'y',"stickWood"));
@@ -291,13 +292,13 @@ public class Mineralogy
     				.register(net.minecraft.item.Item.getItemFromBlock(b), 0, 
     						new ModelResourceLocation(Mineralogy.MODID+":"+name, "inventory"));
     	}
-		/*
+		
     	for(int i = 0; i < 16; i++){
     		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
     				.register(net.minecraft.item.Item.getItemFromBlock(drywall[i]), 0, 
     						new ModelResourceLocation(Mineralogy.MODID+":drywall_"+colorSuffixes[i], "inventory"));
     	}
-    	*/
+
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 			.register(gypsumPowder, 0, 
 				new ModelResourceLocation(Mineralogy.MODID+":"+GypsumDust.itemName, "inventory"));
