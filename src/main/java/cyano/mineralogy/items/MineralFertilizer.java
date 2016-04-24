@@ -19,7 +19,7 @@ public class MineralFertilizer extends Item{
 	public final static String dictionaryName = "fertilizer";
 	public MineralFertilizer(){
 		super();
-		this.setUnlocalizedName(Mineralogy.MODID +"_"+ itemName);
+		this.setUnlocalizedName(Mineralogy.MODID +"."+ itemName);
 		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 	
