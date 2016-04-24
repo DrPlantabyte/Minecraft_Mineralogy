@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/slab",
+    "textures": {
+        "face": "mineralogy:blocks/gneiss",
+        "side": "mineralogy:blocks/gneiss"
+    }
+}

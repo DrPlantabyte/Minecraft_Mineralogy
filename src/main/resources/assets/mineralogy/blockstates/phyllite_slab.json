@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=down":  { "model": "mineralogy:phyllite_slab", "x": 180           },
+    "facing=up":    { "model": "mineralogy:phyllite_slab"                     },
+    "facing=north": { "model": "mineralogy:phyllite_slab", "x": 90            },
+    "facing=south": { "model": "mineralogy:phyllite_slab", "x": 90 , "y": 180 },
+    "facing=west":  { "model": "mineralogy:phyllite_slab", "x": 90 , "y": 270 },
+    "facing=east":  { "model": "mineralogy:phyllite_slab", "x": 90 , "y": 90  }
+  }
+}

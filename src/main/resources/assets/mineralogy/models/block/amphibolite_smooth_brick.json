@@ -1,0 +1,6 @@
+{
+    "parent": "mineralogy:block/block",
+    "textures": {
+        "face": "mineralogy:blocks/amphibolite_smooth_brick"
+    }
+}

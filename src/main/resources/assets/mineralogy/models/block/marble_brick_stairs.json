@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/stairs_normal",
+    "textures": {
+      "face": "mineralogy:blocks/marble_brick_top",
+      "side": "mineralogy:blocks/marble_brick_side"
+    }
+}

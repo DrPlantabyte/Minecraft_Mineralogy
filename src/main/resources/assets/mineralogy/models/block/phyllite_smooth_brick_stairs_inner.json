@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/stairs_inner",
+    "textures": {
+      "face": "mineralogy:blocks/phyllite_smooth_brick",
+      "side": "mineralogy:blocks/phyllite_smooth_brick"
+    }
+}

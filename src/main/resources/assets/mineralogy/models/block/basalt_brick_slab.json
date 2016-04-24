@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/slab",
+    "textures": {
+        "face": "mineralogy:blocks/basalt_brick_side",
+        "side": "mineralogy:blocks/basalt_brick_top"
+    }
+}

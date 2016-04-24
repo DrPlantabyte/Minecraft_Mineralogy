@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/stairs_normal",
+    "textures": {
+      "face": "mineralogy:blocks/pegmatite",
+      "side": "mineralogy:blocks/pegmatite"
+    }
+}

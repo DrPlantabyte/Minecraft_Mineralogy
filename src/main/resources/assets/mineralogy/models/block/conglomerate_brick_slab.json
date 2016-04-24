@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/slab",
+    "textures": {
+        "face": "mineralogy:blocks/conglomerate_brick_side",
+        "side": "mineralogy:blocks/conglomerate_brick_top"
+    }
+}

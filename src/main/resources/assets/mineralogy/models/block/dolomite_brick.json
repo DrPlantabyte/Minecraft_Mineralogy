@@ -1,0 +1,8 @@
+{
+    "parent": "mineralogy:block/brick",
+    "textures": {
+      "top": "mineralogy:blocks/dolomite_brick_top",
+      "bottom": "mineralogy:blocks/dolomite_brick_top",
+        "side": "mineralogy:blocks/dolomite_brick_side"
+    }
+}

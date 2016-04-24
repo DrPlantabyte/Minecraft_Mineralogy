@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/stairs_inner",
+    "textures": {
+      "face": "mineralogy:blocks/diorite_smooth_brick",
+      "side": "mineralogy:blocks/diorite_smooth_brick"
+    }
+}

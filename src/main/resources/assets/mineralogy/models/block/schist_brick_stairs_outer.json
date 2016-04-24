@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/stairs_outer",
+    "textures": {
+      "face": "mineralogy:blocks/schist_brick_top",
+      "side": "mineralogy:blocks/schist_brick_side"
+    }
+}

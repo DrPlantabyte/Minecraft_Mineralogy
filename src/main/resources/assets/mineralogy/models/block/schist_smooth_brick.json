@@ -1,0 +1,6 @@
+{
+    "parent": "mineralogy:block/block",
+    "textures": {
+        "face": "mineralogy:blocks/schist_smooth_brick"
+    }
+}

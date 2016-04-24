@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/stairs_inner",
+    "textures": {
+      "face": "mineralogy:blocks/dolomite_brick_top",
+      "side": "mineralogy:blocks/dolomite_brick_side"
+    }
+}

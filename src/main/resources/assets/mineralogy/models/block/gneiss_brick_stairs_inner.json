@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/stairs_inner",
+    "textures": {
+      "face": "mineralogy:blocks/gneiss_brick_top",
+      "side": "mineralogy:blocks/gneiss_brick_side"
+    }
+}

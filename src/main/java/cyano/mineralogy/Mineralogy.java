@@ -101,9 +101,6 @@ public class Mineralogy
     {
 
 
-		// Testing code
-		addStoneType(RockType.IGNEOUS,"andesite",1.5,10,0);
-
 		/*
     	// load config
     	Configuration config = new Configuration(event.getSuggestedConfigurationFile());
@@ -120,74 +117,7 @@ public class Mineralogy
    "Changing this value will change the 'waviness' of the layers.");
     	GEOM_LAYER_THICKNESS = config.getInt("ROCK_LAYER_THICKNESS", "world-gen",GEOM_LAYER_THICKNESS, 1, 255, 
    "Changing this value will change the height of individual layers.");
-    	
-    	// Blocks, Items, World-gen
-    	addStoneType(RockType.IGNEOUS,"andesite",1.5,10,0,true,false);
-    	addStoneType(RockType.IGNEOUS,"basalt",5,100,2,true,false);
-    	addStoneType(RockType.IGNEOUS,"diorite",1.5,10,0,true,false);
-    	addStoneType(RockType.IGNEOUS,"granite",3,15,1,true,false);
-    	addStoneType(RockType.IGNEOUS,"pumice",0.75,1,0,true,false);
-    	addStoneType(RockType.IGNEOUS,"rhyolite",1.5,10,0,true,false);
-    	addStoneType(RockType.IGNEOUS,"pegmatite",1.5,10,0,true,false);
-    	addStoneType(RockType.SEDIMENTARY,"shale",1.5,10,0,true,true);
-    	addStoneType(RockType.SEDIMENTARY,"conglomerate",1.5,10,0,true,false);
-    	addStoneType(RockType.SEDIMENTARY,"dolomite",3,15,1,true,false);
-    	addStoneType(RockType.SEDIMENTARY,"limestone",1.5,10,0,true,true);
-    	sedimentaryStones.add(Blocks.sandstone);
-    	blockChert = new Chert();
-    	GameRegistry.registerBlock(blockChert,"chert");
-    	mineralogyBlockRegistry.put("chert", blockChert);
-    	sedimentaryStones.add(blockChert);
-    	doRockRecipes(blockChert);
-    	blockSaprolite = new Soil(MODID+"_saprolite");
-    	GameRegistry.registerBlock(blockSaprolite,"saprolite");
-    	mineralogyBlockRegistry.put("saprolite", blockSaprolite);
-    	sedimentaryStones.add(blockSaprolite);
-    	addStoneType(RockType.METAMORPHIC,"slate",1.5,10,0,true,true);
-    	addStoneType(RockType.METAMORPHIC,"schist",3,15,1,true,false);
-    	addStoneType(RockType.METAMORPHIC,"gneiss",3,15,1,true,false);
-    	
-    	// add items
-    	blockGypsum = new Gypsum();
-    	GameRegistry.registerBlock(blockGypsum, "gypsum");
-    	gypsumPowder = new GypsumDust();
-    	GameRegistry.registerItem(gypsumPowder, GypsumDust.itemName);
-    	OreDictionary.registerOre(GypsumDust.dictionaryName, gypsumPowder);
-    	sulphurPowder = new SulfurDust();
-    	GameRegistry.registerItem(sulphurPowder, SulfurDust.itemName);
-    	OreDictionary.registerOre(SulfurDust.dictionaryName, sulphurPowder);
-    	phosphorousPowder = new PhosphoriteDust();
-    	GameRegistry.registerItem(phosphorousPowder, PhosphoriteDust.itemName);
-    	OreDictionary.registerOre(PhosphoriteDust.dictionaryName, phosphorousPowder);
-    	nitratePowder = new NitrateDust();
-    	GameRegistry.registerItem(nitratePowder, NitrateDust.itemName);
-    	OreDictionary.registerOre(NitrateDust.dictionaryName, nitratePowder);
-    	mineralFertilizer = new MineralFertilizer();
-    	GameRegistry.registerItem(mineralFertilizer, MineralFertilizer.itemName);
-    	OreDictionary.registerOre(MineralFertilizer.dictionaryName, mineralFertilizer);
-    	
-    	// register ores
-    	addOre("sulfur_ore","oreSulfur",sulphurPowder,1,4,0, 
-    			config.getInt("sulphur_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
-    			config.getInt("sulphur_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
-    			config.getFloat("sulphur_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
-    			config.getInt("sulphur_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
-    	addOre("phosphorous_ore","orePhosphorous",phosphorousPowder,1,4,0, 
-    			config.getInt("phosphorous_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
-    			config.getInt("phosphorous_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
-    			config.getFloat("phosphorous_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
-    			config.getInt("phosphorous_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
-    	addOre("nitrate_ore","oreNitrate",nitratePowder,1,4,0, 
-    			config.getInt("nitrate_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
-    			config.getInt("nitrate_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
-    			config.getFloat("nitrate_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
-    			config.getInt("nitrate_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
-    	addOre(blockGypsum, "gypsum",
-    			config.getInt("gypsum.minY", "Mineralogy Ores", 32, 1, 255, "Minimum ore spawn height"),
-    			config.getInt("gypsum.maxY", "Mineralogy Ores", 128, 1, 255, "Maximum ore spawn height"),
-    			config.getFloat("gypsum.frequency", "Mineralogy Ores", 0.125f, 0, 63, "Number of ore deposits per chunk"),
-    			config.getInt("gypsum.quantity", "Mineralogy Ores", 100, 0, 63, "Size of ore deposit"));
-    	
+
     	igneousBlacklist.addAll(asList(config.getString("igneous_blacklist", "world-gen", "", "Ban blocks from spawning in rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
     	sedimentaryBlacklist.addAll(asList(config.getString("sedimentary_blacklist", "world-gen", "", "Ban blocks from spawning in rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
     	metamorphicBlacklist.addAll(asList(config.getString("metamorphic_blacklist", "world-gen", "", "Ban blocks from spawning in rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
@@ -195,7 +125,8 @@ public class Mineralogy
     	igneousWhitelist.addAll(asList(config.getString("igneous_whitelist", "world-gen", "", "Adds blocks to rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
     	sedimentaryWhitelist.addAll(asList(config.getString("sedimentary_whitelist", "world-gen", "", "Adds blocks to rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
     	metamorphicWhitelist.addAll(asList(config.getString("metamorphic_whitelist", "world-gen", "", "Adds blocks to rock layers (format is mod:block as a semicolin (;) delimited list)"),";"));
-    	
+
+    	config.save();
     	
     	for(int i = 0; i < 16; i++){
     		drywall[i] = new DryWall(colorSuffixes[i]);
@@ -227,9 +158,82 @@ public class Mineralogy
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,4),Items.sugar,NitrateDust.dictionaryName,SulfurDust.dictionaryName));
     	GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(mineralFertilizer,1),NitrateDust.dictionaryName,PhosphoriteDust.dictionaryName));
 
-    	
-    	config.save();
+
     	*/
+
+		// Blocks, Items, World-gen
+		addStoneType(RockType.IGNEOUS,"andesite",1.5,10,0);
+		addStoneType(RockType.IGNEOUS,"basalt",5,100,2);
+		addStoneType(RockType.IGNEOUS,"diorite",1.5,10,0);
+		addStoneType(RockType.IGNEOUS,"granite",3,15,1);
+		addStoneType(RockType.IGNEOUS,"rhyolite",1.5,10,0);
+		addStoneType(RockType.IGNEOUS,"pegmatite",1.5,10,0);
+
+		addStoneType(RockType.SEDIMENTARY,"shale",1.5,10,0);
+		addStoneType(RockType.SEDIMENTARY,"conglomerate",1.5,10,0);
+		addStoneType(RockType.SEDIMENTARY,"dolomite",3,15,1);
+		addStoneType(RockType.SEDIMENTARY,"limestone",1.5,10,0);
+
+		addStoneType(RockType.METAMORPHIC,"slate",1.5,10,0);
+		addStoneType(RockType.METAMORPHIC,"schist",3,15,1);
+		addStoneType(RockType.METAMORPHIC,"gneiss",3,15,1);
+		addStoneType(RockType.SEDIMENTARY,"marble",1.5,10,0);
+		addStoneType(RockType.METAMORPHIC,"phyllite",1.5,10,0);
+		addStoneType(RockType.METAMORPHIC,"amphibolite",3,15,1);
+		/*
+		sedimentaryStones.add(Blocks.sandstone);
+		blockChert = new Chert();
+		GameRegistry.registerBlock(blockChert,"chert");
+		mineralogyBlockRegistry.put("chert", blockChert);
+		sedimentaryStones.add(blockChert);
+		blockSaprolite = new Soil(MODID+"_saprolite");
+		GameRegistry.registerBlock(blockSaprolite,"saprolite");
+		mineralogyBlockRegistry.put("saprolite", blockSaprolite);
+		sedimentaryStones.add(blockSaprolite);
+		// TODO: pumice
+
+		// add items
+		blockGypsum = new Gypsum();
+		GameRegistry.registerBlock(blockGypsum, "gypsum");
+		gypsumPowder = new GypsumDust();
+		GameRegistry.registerItem(gypsumPowder, GypsumDust.itemName);
+		OreDictionary.registerOre(GypsumDust.dictionaryName, gypsumPowder);
+		sulphurPowder = new SulfurDust();
+		GameRegistry.registerItem(sulphurPowder, SulfurDust.itemName);
+		OreDictionary.registerOre(SulfurDust.dictionaryName, sulphurPowder);
+		phosphorousPowder = new PhosphoriteDust();
+		GameRegistry.registerItem(phosphorousPowder, PhosphoriteDust.itemName);
+		OreDictionary.registerOre(PhosphoriteDust.dictionaryName, phosphorousPowder);
+		nitratePowder = new NitrateDust();
+		GameRegistry.registerItem(nitratePowder, NitrateDust.itemName);
+		OreDictionary.registerOre(NitrateDust.dictionaryName, nitratePowder);
+		mineralFertilizer = new MineralFertilizer();
+		GameRegistry.registerItem(mineralFertilizer, MineralFertilizer.itemName);
+		OreDictionary.registerOre(MineralFertilizer.dictionaryName, mineralFertilizer);
+
+		// register ores
+		addOre("sulfur_ore","oreSulfur",sulphurPowder,1,4,0,
+				config.getInt("sulphur_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
+				config.getInt("sulphur_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
+				config.getFloat("sulphur_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
+				config.getInt("sulphur_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
+		addOre("phosphorous_ore","orePhosphorous",phosphorousPowder,1,4,0,
+				config.getInt("phosphorous_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
+				config.getInt("phosphorous_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
+				config.getFloat("phosphorous_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
+				config.getInt("phosphorous_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
+		addOre("nitrate_ore","oreNitrate",nitratePowder,1,4,0,
+				config.getInt("nitrate_ore.minY", "Mineralogy Ores", 16, 1, 255, "Minimum ore spawn height"),
+				config.getInt("nitrate_ore.maxY", "Mineralogy Ores", 64, 1, 255, "Maximum ore spawn height"),
+				config.getFloat("nitrate_ore.frequency", "Mineralogy Ores", 1, 0, 63, "Number of ore deposits per chunk"),
+				config.getInt("nitrate_ore.quantity", "Mineralogy Ores", 16, 0, 63, "Size of ore deposit"));
+		addOre(blockGypsum, "gypsum",
+				config.getInt("gypsum.minY", "Mineralogy Ores", 32, 1, 255, "Minimum ore spawn height"),
+				config.getInt("gypsum.maxY", "Mineralogy Ores", 128, 1, 255, "Maximum ore spawn height"),
+				config.getFloat("gypsum.frequency", "Mineralogy Ores", 0.125f, 0, 63, "Number of ore deposits per chunk"),
+				config.getInt("gypsum.quantity", "Mineralogy Ores", 100, 0, 63, "Size of ore deposit"));
+
+		*/
     }
     
     private static List<String> asList(String list, String delimiter){

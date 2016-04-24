@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/slab",
+    "textures": {
+        "face": "mineralogy:blocks/pegmatite_brick_side",
+        "side": "mineralogy:blocks/pegmatite_brick_top"
+    }
+}

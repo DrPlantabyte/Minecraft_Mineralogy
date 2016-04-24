@@ -1,0 +1,7 @@
+{
+    "parent": "mineralogy:block/stairs_normal",
+    "textures": {
+      "face": "mineralogy:blocks/phyllite_smooth",
+      "side": "mineralogy:blocks/phyllite_smooth"
+    }
+}

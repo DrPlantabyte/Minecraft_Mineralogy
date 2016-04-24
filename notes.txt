@@ -25,7 +25,8 @@ Ores:
 gypsum (sedimentary layer)
 chert (sedimentary layer)
 pummice (igneous layer)
-phosphorite
-salt peter (aka nitrate)
+phosphate ore
+nitrate ore (aka salt peter)
+sulfur ore
 
 Note: change vanilla textures and language to make sandstone smooth and smooth_sandstone be sandstone bricks
