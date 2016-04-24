@@ -2,7 +2,6 @@
     "parent": "block/stairs",
     "textures": {
         "bottom": "#face",
-        "top": "#face",
-        "side": "#face"
+        "top": "#face"
     }
 }
