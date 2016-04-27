@@ -32,7 +32,7 @@ javadoc {
     failOnError = false
 }
 
-version = "3.0.0"
+version = "3.0.1"
 group= "cyano.mineralogy" 
 archivesBaseName = "Mineralogy_1.9.0"
 
