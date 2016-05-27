@@ -4,6 +4,7 @@ package cyano.mineralogy;
 
 import cyano.mineralogy.blocks.*;
 import cyano.mineralogy.items.*;
+import cyano.mineralogy.patching.PatchHandler;
 import cyano.mineralogy.worldgen.OreSpawner;
 import cyano.mineralogy.worldgen.StoneReplacer;
 import net.minecraft.block.Block;
@@ -38,7 +39,7 @@ public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "3.0.1";
+    public static final String VERSION = "3.0.2";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -60,6 +61,8 @@ public class Mineralogy
 	public static boolean SMELTABLE_GRAVEL = true;
 
 	public static boolean DROP_COBBLESTONE = false;
+
+	public static boolean PATCH_UPDATE = true;
     
  //   public static OrePlacer orePlacementGenerator = null;
 
@@ -67,7 +70,7 @@ public class Mineralogy
 
     public static Block blockGypsum;
 
-    public static Block blockPummice;
+    public static Block blockPumice;
     
     public static Item gypsumPowder;
     
@@ -103,6 +106,11 @@ public class Mineralogy
     	// load config
     	Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     	config.load();
+
+		PATCH_UPDATE = config.getBoolean("patch_world", "options", PATCH_UPDATE,
+				"If true, then the world will be patched to fix compatibility-breaking " +
+				"changes to this mod by adding-back mock-ups of old obsolete blocks and " +
+				"then replacing obsolete blocks with newer blocks.");
 
     	SMELTABLE_GRAVEL = config.getBoolean("SMELTABLE_GRAVEL", "options", SMELTABLE_GRAVEL,
    "If true, then gravel can be smelted into generic stone");
@@ -172,9 +180,10 @@ public class Mineralogy
 		sedimentaryStones.add(Blocks.SANDSTONE);
 		blockChert = registerBlock(new Chert(),"chert");
 		sedimentaryStones.add(blockChert);
+		OreDictionary.registerOre("cobblestone",blockChert);
 		blockGypsum = registerBlock(new Gypsum(),"gypsum");
 		sedimentaryStones.add(blockGypsum);
-		blockPummice = registerBlock(new Rock(false,0.5F,5F,0, SoundType.GROUND),"pummice");
+		blockPumice = registerBlock(new Rock(false,0.5F,5F,0, SoundType.GROUND),"pumice");
 		igneousStones.add(blockGypsum);
 
 		// register ores
@@ -266,6 +275,8 @@ public class Mineralogy
 		// less generic stone slab recipe
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.STONE_SLAB,6,0),"xxx", 'x',Blocks.STONE));
 
+		// initialize legacy updater
+		PatchHandler.getInstance().init(PATCH_UPDATE);
 
 		// event registration, tile entities
     	// (none)

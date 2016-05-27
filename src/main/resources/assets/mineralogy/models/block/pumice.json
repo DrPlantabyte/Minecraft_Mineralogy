@@ -1,6 +1,6 @@
 {
     "parent": "mineralogy:block/block",
     "textures": {
-        "face": "mineralogy:blocks/pummice"
+        "face": "mineralogy:blocks/pumice"
     }
 }
