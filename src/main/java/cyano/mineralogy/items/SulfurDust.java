@@ -5,8 +5,7 @@ import cyano.mineralogy.Mineralogy;
 
 public class SulfurDust extends net.minecraft.item.Item {
 	
-	public final static String itemName = "sulfur_dust"; 
-	public final static String dictionaryName = "dustSulfur";
+	public final static String itemName = "sulfur_dust";
 	
 	public SulfurDust(){
 		super();

@@ -164,7 +164,10 @@ public class Mineralogy
 		OreDictionary.registerOre(GypsumDust.dictionaryName, gypsumPowder);
 
 		sulphurPowder = registerItem(new SulfurDust(), SulfurDust.itemName).setCreativeTab(CreativeTabs.MATERIALS);
-		OreDictionary.registerOre(SulfurDust.dictionaryName, sulphurPowder);
+		OreDictionary.registerOre("dustSulfur", sulphurPowder);
+		OreDictionary.registerOre("sulfur", sulphurPowder);
+		OreDictionary.registerOre("sulphur", sulphurPowder);
+		OreDictionary.registerOre("dustSulphur", sulphurPowder);
 
 		phosphorousPowder = registerItem(new PhosphoriteDust(), PhosphoriteDust.itemName).setCreativeTab(CreativeTabs.MATERIALS);
 		OreDictionary.registerOre(PhosphoriteDust.dictionaryName, phosphorousPowder);
