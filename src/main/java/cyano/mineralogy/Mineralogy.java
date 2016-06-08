@@ -34,12 +34,13 @@ import java.util.*;
 
 
 
-@Mod(modid = Mineralogy.MODID, name=Mineralogy.NAME, version = Mineralogy.VERSION)
+@Mod(modid = Mineralogy.MODID, name=Mineralogy.NAME, version = Mineralogy.VERSION,
+		acceptedMinecraftVersions = "[1.9.4,)")
 public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "3.0.3";
+    public static final String VERSION = "3.1.1";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */
@@ -190,11 +191,12 @@ public class Mineralogy
 		igneousStones.add(blockGypsum);
 
 		// register ores
-		addOre("sulfur_ore","oreSulfur",sulphurPowder,1,4,0,
+		Block s = addOre("sulfur_ore","oreSulfur",sulphurPowder,1,4,0,
 				config.getInt("sulphur_ore.minY", "ores", 16, 1, 255, "Minimum ore spawn height"),
 				config.getInt("sulphur_ore.maxY", "ores", 64, 1, 255, "Maximum ore spawn height"),
 				config.getFloat("sulphur_ore.frequency", "ores", 1, 0, 63, "Number of ore deposits per chunk"),
 				config.getInt("sulphur_ore.quantity", "ores", 16, 0, 63, "Size of ore deposit"));
+		OreDictionary.registerOre("oreSulphur",s); // Damn English and its multiple spellings. There better not be people out there spelling is "sulphre"
 		addOre("phosphorous_ore","orePhosphorous",phosphorousPowder,1,4,0,
 				config.getInt("phosphorous_ore.minY", "ores", 16, 1, 255, "Minimum ore spawn height"),
 				config.getInt("phosphorous_ore.maxY", "ores", 64, 1, 255, "Maximum ore spawn height"),
@@ -247,9 +249,9 @@ public class Mineralogy
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(drywall[15],1),"drywall","dyeWhite"));
 
 
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.GUNPOWDER,4),new ItemStack(Items.COAL,1,1),NitrateDust.dictionaryName,SulfurDust.dictionaryName));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.GUNPOWDER,4),"dustCarbon",NitrateDust.dictionaryName,SulfurDust.dictionaryName));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.GUNPOWDER,4),Items.SUGAR,NitrateDust.dictionaryName,SulfurDust.dictionaryName));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.GUNPOWDER,4),new ItemStack(Items.COAL,1,1),NitrateDust.dictionaryName,"dustSulfur"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.GUNPOWDER,4),"dustCarbon",NitrateDust.dictionaryName,"dustSulfur"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.GUNPOWDER,4),Items.SUGAR,NitrateDust.dictionaryName,"dustSulfur"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(mineralFertilizer,1),NitrateDust.dictionaryName,PhosphoriteDust.dictionaryName));
 
 		// recipe modifications
@@ -364,14 +366,14 @@ public class Mineralogy
     
     private static int oreWeightCount = 20;
     
-    private static void addOre(String oreName, String oreDictionaryName, Item oreDropItem, int numMin, int numMax, int pickLevel,
+    private static Block addOre(String oreName, String oreDictionaryName, Item oreDropItem, int numMin, int numMax, int pickLevel,
     		int minY, int maxY, float spawnFrequency, int spawnQuantity){
     	String oreBlockName = Mineralogy.MODID+"."+oreName;
     	Block oreBlock = new Ore(oreName,oreDropItem,numMin,numMax,pickLevel).setUnlocalizedName(oreBlockName);
     	registerBlock(oreBlock, oreName);
     	OreDictionary.registerOre(oreDictionaryName, oreBlock);
     	GameRegistry.registerWorldGenerator(new OreSpawner(oreBlock,minY,maxY,spawnFrequency,spawnQuantity, (oreWeightCount * 25214903917L)+11L), oreWeightCount++);
-    	
+    	return oreBlock;
     }
 
 
