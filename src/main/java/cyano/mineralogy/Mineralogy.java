@@ -35,12 +35,12 @@ import java.util.*;
 
 
 @Mod(modid = Mineralogy.MODID, name=Mineralogy.NAME, version = Mineralogy.VERSION,
-		acceptedMinecraftVersions = "[1.9.4,)")
+		acceptedMinecraftVersions = "[1.10.2,)")
 public class Mineralogy
 {
     public static final String MODID = "mineralogy";
     public static final String NAME ="Mineralogy";
-    public static final String VERSION = "3.1.1";
+    public static final String VERSION = "3.2.0";
     /** stone block replacesments that are sedimentary */
     public static final List<Block> sedimentaryStones = new ArrayList<Block>();
     /** stone block replacesments that are metamorphic */

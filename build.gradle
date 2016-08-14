@@ -32,12 +32,12 @@ javadoc {
     failOnError = false
 }
 
-version = "3.1.1"
+version = "3.2.0"
 group= "cyano.mineralogy" 
-archivesBaseName = "Mineralogy_1.9.4"
+archivesBaseName = "Mineralogy_1.10.2"
 
 minecraft {
-    version = "1.9.4-12.17.0.1922-1.9.4"
+    version = "1.10.2-12.18.1.2011"
 	runDir = "run"
     mappings = "snapshot_20160518"
 }
